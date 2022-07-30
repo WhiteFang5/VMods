@@ -4,7 +4,7 @@
     <AssemblyName>VMods.ResourceStashWithdrawal</AssemblyName>
     <RootNamespace>VMods.ResourceStashWithdrawal</RootNamespace>
     <Description>Allows a player to withdraw required resources from his/her stash when clicking a recipe at a work or refinement station</Description>
-    <Version>0.0.1</Version>
+    <Version>1.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>

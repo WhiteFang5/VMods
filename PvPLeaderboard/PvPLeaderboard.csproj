@@ -4,7 +4,7 @@
     <AssemblyName>VMods.PvPLeaderboard</AssemblyName>
     <RootNamespace>VMods.PvPLeaderboard</RootNamespace>
     <Description>A mod that keeps track of player's K/D and adds a pvp leaderboard</Description>
-    <Version>0.0.1</Version>
+    <Version>1.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>

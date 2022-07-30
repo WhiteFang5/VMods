@@ -4,7 +4,7 @@
     <AssemblyName>VMods.Shared</AssemblyName>
     <RootNamespace>VMods.Shared</RootNamespace>
     <Description>A set of shared classes and utilites for all VMods</Description>
-    <Version>0.0.1</Version>
+    <Version>1.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>

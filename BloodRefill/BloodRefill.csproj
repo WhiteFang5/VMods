@@ -4,7 +4,7 @@
     <AssemblyName>VMods.BloodRefill</AssemblyName>
     <RootNamespace>VMods.BloodRefill</RootNamespace>
     <Description>Allows a player to refill his/her blood pool</Description>
-    <Version>0.0.1</Version>
+    <Version>1.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
