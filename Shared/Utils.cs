@@ -248,13 +248,13 @@ namespace VMods.Shared
 			RemoveBuff(fromCharacter.Character, buffGUID);
 		}
 
-		public static void RemoveBuff(Entity charEntity, PrefabGUID buffGUID)
+		public static void RemoveBuff(Entity charEntity, PrefabGUID buffGUID, EntityManager? entityManager = null)
 		{
-			var entityManager = CurrentWorld.EntityManager;
-			if(BuffUtility.HasBuff(entityManager, charEntity, buffGUID))
+			entityManager ??= CurrentWorld.EntityManager;
+			if(BuffUtility.HasBuff(entityManager.Value, charEntity, buffGUID))
 			{
-				BuffUtility.TryGetBuff(entityManager, charEntity, buffGUID, out var buffEntity);
-				entityManager.AddComponent<DestroyTag>(buffEntity);
+				BuffUtility.TryGetBuff(entityManager.Value, charEntity, buffGUID, out var buffEntity);
+				entityManager.Value.AddComponent<DestroyTag>(buffEntity);
 			}
 		}
 
@@ -268,27 +268,6 @@ namespace VMods.Shared
 				if(userData.PlatformId == platformId)
 				{
 					return userData.CharacterName.ToString();
-				}
-			}
-			return null;
-		}
-
-		public static FromCharacter? GetFromCharacter(string charactername, EntityManager? entityManager = null)
-		{
-			entityManager ??= CurrentWorld.EntityManager;
-			var characters = entityManager.Value.CreateEntityQuery(ComponentType.ReadOnly<PlayerCharacter>()).ToEntityArray(Allocator.Temp);
-			foreach(var charEntity in characters)
-			{
-				var playerCharacter = entityManager.Value.GetComponentData<PlayerCharacter>(charEntity);
-				var userEntity = playerCharacter.UserEntity._Entity;
-				var userData = entityManager.Value.GetComponentData<User>(userEntity);
-				if(userData.CharacterName.ToString() == charactername)
-				{
-					return new FromCharacter()
-					{
-						User = userEntity,
-						Character = charEntity,
-					};
 				}
 			}
 			return null;

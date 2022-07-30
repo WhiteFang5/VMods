@@ -30,6 +30,7 @@
     <Compile Include="..\Shared\SaveHook.cs" Link="Shared\SaveHook.cs" />
     <Compile Include="..\Shared\Utils.cs" Link="Shared\Utils.cs" />
     <Compile Include="..\Shared\VampireDownedHook.cs" Link="Shared\VampireDownedHook.cs" />
+    <Compile Include="..\Shared\VModCharacter.cs" Link="Shared\VModCharacter.cs" />
     <Compile Include="..\Shared\VModStorage.cs" Link="Shared\VModStorage.cs" />
   </ItemGroup>
   

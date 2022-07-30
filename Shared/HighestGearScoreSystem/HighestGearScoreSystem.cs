@@ -69,6 +69,11 @@ namespace VMods.Shared
 			return GetCurrentGearScore(fromCharacter.Character, entityManager);
 		}
 
+		public static float GetCurrentGearScore(VModCharacter vmodCharacter, EntityManager entityManager)
+		{
+			return GetCurrentGearScore(vmodCharacter.FromCharacter.Character, entityManager);
+		}
+
 		public static float GetCurrentGearScore(Entity characterEntity, EntityManager entityManager)
 		{
 			var equipment = entityManager.GetComponentData<Equipment>(characterEntity);
@@ -139,19 +144,19 @@ namespace VMods.Shared
 		private static void OnHighestGearScoreCommand(Command command)
 		{
 			var entityManager = VWorld.Server.EntityManager;
-			(var searchUsername, var fromCharacter) = command.GetFromCharacter(entityManager: entityManager);
+			(var searchUsername, var vmodCharacter) = command.FindVModCharacter(entityManager: entityManager);
 
-			if(fromCharacter.HasValue)
+			if(vmodCharacter.HasValue)
 			{
-				var user = entityManager.GetComponentData<User>(fromCharacter.Value.User);
+				var user = vmodCharacter.Value.User;
 				if(_gearScoreData.TryGetValue(user.PlatformId, out var gearScoreData))
 				{
 					TimeSpan diff = DateTime.UtcNow.Subtract(gearScoreData.LastUpdated);
-					command.User.SendSystemMessage($"[{Utils.PluginName}] The Highest Gear Score for <color=#ffffff>{searchUsername}</color> (Lv: {GetCurrentGearScore(fromCharacter.Value, entityManager)}) was <color=#00ff00>{gearScoreData.HighestGearScore}</color> (Last updated {diff.ToAgoString()} ago).");
+					command.User.SendSystemMessage($"[{Utils.PluginName}] The Highest Gear Score for <color=#ffffff>{searchUsername}</color> (Lv: {GetCurrentGearScore(vmodCharacter.Value, entityManager)}) was <color=#00ff00>{gearScoreData.HighestGearScore}</color> (Last updated {diff.ToAgoString()} ago).");
 				}
 				else
 				{
-					command.User.SendSystemMessage($"[{Utils.PluginName}] No Highest Gear Score is recorded for <color=#ffffff>{searchUsername}</color> (Lv: {GetCurrentGearScore(fromCharacter.Value, entityManager)}).");
+					command.User.SendSystemMessage($"[{Utils.PluginName}] No Highest Gear Score is recorded for <color=#ffffff>{searchUsername}</color> (Lv: {GetCurrentGearScore(vmodCharacter.Value, entityManager)}).");
 				}
 			}
 		}
@@ -160,11 +165,11 @@ namespace VMods.Shared
 		private static void OnResetHighestGearScoreCommand(Command command)
 		{
 			var entityManager = VWorld.Server.EntityManager;
-			(var searchUsername, var fromCharacter) = command.GetFromCharacter(entityManager: entityManager);
+			(var searchUsername, var vmodCharacter) = command.FindVModCharacter(entityManager: entityManager);
 
-			if(fromCharacter.HasValue)
+			if(vmodCharacter.HasValue)
 			{
-				var user = entityManager.GetComponentData<User>(fromCharacter.Value.User);
+				var user = vmodCharacter.Value.User;
 				_gearScoreData.Remove(user.PlatformId);
 				command.User.SendSystemMessage($"[{Utils.PluginName}] Removed the Highest Gear Score record for <color=#ffffff>{searchUsername}</color>.");
 			}

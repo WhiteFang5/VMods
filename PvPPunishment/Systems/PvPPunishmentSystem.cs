@@ -220,11 +220,11 @@ namespace VMods.PvPPunishment
 		private static void OnIsPunishedPlayerCommand(Command command)
 		{
 			var entityManager = VWorld.Server.EntityManager;
-			(var searchUsername, var fromCharacter) = command.GetFromCharacter(entityManager: entityManager);
+			(var searchUsername, var vmodCharacter) = command.FindVModCharacter(entityManager: entityManager);
 
-			if(fromCharacter.HasValue)
+			if(vmodCharacter.HasValue)
 			{
-				if(BuffUtility.HasBuff(entityManager, fromCharacter.Value.Character, Utils.SevereGarlicDebuff))
+				if(vmodCharacter.Value.HasBuff(Utils.SevereGarlicDebuff, entityManager))
 				{
 					command.User.SendSystemMessage($"Vampire <color=#ffffff>{searchUsername}</color> <color=#ff0000>is</color> currently punished.");
 				}
@@ -240,11 +240,11 @@ namespace VMods.PvPPunishment
 		private static void OnPunishPlayerCommand(Command command)
 		{
 			var entityManager = VWorld.Server.EntityManager;
-			(var searchUsername, var fromCharacter) = command.GetFromCharacter(entityManager: entityManager);
+			(var searchUsername, var vmodCharacter) = command.FindVModCharacter(entityManager: entityManager);
 
-			if(fromCharacter.HasValue)
+			if(vmodCharacter.HasValue)
 			{
-				Utils.ApplyBuff(fromCharacter.Value, Utils.SevereGarlicDebuff);
+				vmodCharacter.Value.ApplyBuff(Utils.SevereGarlicDebuff);
 				command.User.SendSystemMessage($"Vampire <color=#ffffff>{searchUsername}</color> has been punished.");
 			}
 			command.Use();
@@ -254,11 +254,11 @@ namespace VMods.PvPPunishment
 		private static void OnUnPunishPlayerCommand(Command command)
 		{
 			var entityManager = VWorld.Server.EntityManager;
-			(var searchUsername, var fromCharacter) = command.GetFromCharacter(entityManager: entityManager);
+			(var searchUsername, var vmodCharacter) = command.FindVModCharacter(entityManager: entityManager);
 
-			if(fromCharacter.HasValue)
+			if(vmodCharacter.HasValue)
 			{
-				Utils.RemoveBuff(fromCharacter.Value, Utils.SevereGarlicDebuff);
+				vmodCharacter.Value.RemoveBuff(Utils.SevereGarlicDebuff);
 				command.User.SendSystemMessage($"Vampire <color=#ffffff>{searchUsername}</color> has been un-punished.");
 			}
 			command.Use();

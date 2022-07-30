@@ -20,6 +20,7 @@
     <Compile Include="..\Shared\BuffSystemHook.cs" Link="Shared\BuffSystemHook.cs" />
     <Compile Include="..\Shared\CommandSystem\Command.cs" Link="Shared\Command.cs" />
     <Compile Include="..\Shared\CommandSystem\CommandAttribute.cs" Link="Shared\CommandAttribute.cs" />
+    <Compile Include="..\Shared\CommandSystem\CommandExtensions.cs" Link="Shared\CommandExtensions.cs" />
     <Compile Include="..\Shared\CommandSystem\CommandSystem.cs" Link="Shared\CommandSystem.cs" />
     <Compile Include="..\Shared\CommandSystem\CommandSystemConfig.cs" Link="Shared\CommandSystemConfig.cs" />
     <Compile Include="..\Shared\ExtensionMethods.cs" Link="Shared\ExtensionMethods.cs" />
@@ -29,6 +30,7 @@
     <Compile Include="..\Shared\SaveHook.cs" Link="Shared\SaveHook.cs" />
     <Compile Include="..\Shared\Utils.cs" Link="Shared\Utils.cs" />
     <Compile Include="..\Shared\VampireDownedHook.cs" Link="Shared\VampireDownedHook.cs" />
+    <Compile Include="..\Shared\VModCharacter.cs" Link="Shared\VModCharacter.cs" />
     <Compile Include="..\Shared\VModStorage.cs" Link="Shared\VModStorage.cs" />
   </ItemGroup>
 

@@ -24,6 +24,12 @@ namespace VMods.PvPLeaderboard
 
 		#endregion
 
+		#region Properties
+
+		private static IEnumerable<KeyValuePair<ulong, PvPStats>> PvPLeaderboard => _pvpStats.OrderByDescending(x => x.Value.KDRatio).ThenByDescending(x => x.Value.Kills).ThenBy(x => x.Value.Deaths);
+
+		#endregion
+
 		#region Public Methods
 
 		public static void Initialize()
@@ -117,13 +123,19 @@ namespace VMods.PvPLeaderboard
 		[Command("pvpstats,pvp", "pvpstats", "Shows your current pvp stats (kills, deaths & K/D ratio).")]
 		private static void OnPvPStatsCommand(Command command)
 		{
-			var user = command.User;
-			if(!_pvpStats.TryGetValue(user.PlatformId, out var pvpStats))
+			var entityManager = VWorld.Server.EntityManager;
+			(var searchUsername, var vmodCharacter) = command.FindVModCharacter(entityManager: entityManager);
+
+			if(vmodCharacter.HasValue)
 			{
-				pvpStats = new PvPStats();
-				_pvpStats[user.PlatformId] = pvpStats;
+				var user = vmodCharacter.Value.User;
+				if(!_pvpStats.TryGetValue(user.PlatformId, out var pvpStats))
+				{
+					pvpStats = new PvPStats();
+					_pvpStats[user.PlatformId] = pvpStats;
+				}
+				command.User.SendSystemMessage($"<color=#ffffff>{searchUsername}</color> K/D: {pvpStats.KDRatio} [{pvpStats.Kills}/{pvpStats.Deaths}] - Rank {PvPLeaderboard.ToList().FindIndex(x => x.Key == user.PlatformId) + 1}");
 			}
-			user.SendSystemMessage($"{user.CharacterName} K/D: {pvpStats.KDRatio} [{pvpStats.Kills}/{pvpStats.Deaths}]");
 			command.Use();
 		}
 
@@ -143,7 +155,7 @@ namespace VMods.PvPLeaderboard
 
 			var user = command.User;
 			var entityManager = VWorld.Server.EntityManager;
-			var leaderboard = _pvpStats.OrderByDescending(x => x.Value.KDRatio).ThenByDescending(x => x.Value.Kills).ThenBy(x => x.Value.Deaths).Skip(page * recordsPerPage).Take(recordsPerPage);
+			var leaderboard = PvPLeaderboard.Skip(page * recordsPerPage).Take(recordsPerPage);
 			user.SendSystemMessage("========== PvP Leaderboard ==========");
 			int rank = (page * recordsPerPage) + 1;
 			foreach((var platformId, var pvpStats) in leaderboard)

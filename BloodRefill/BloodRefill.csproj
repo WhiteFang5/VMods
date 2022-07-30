@@ -23,6 +23,7 @@
     <Compile Include="..\Shared\CommandSystem\CommandSystem.cs" Link="Shared\CommandSystem.cs" />
     <Compile Include="..\Shared\CommandSystem\CommandSystemConfig.cs" Link="Shared\CommandSystemConfig.cs" />
     <Compile Include="..\Shared\Utils.cs" Link="Shared\Utils.cs" />
+    <Compile Include="..\Shared\VModCharacter.cs" Link="Shared\VModCharacter.cs" />
   </ItemGroup>
   
   <ItemGroup>
