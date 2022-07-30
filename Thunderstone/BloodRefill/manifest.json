@@ -1,5 +1,5 @@
 {
-  "name": "VMods - Blood Refill",
+  "name": "VMods_Blood_Refill",
   "description": "A mod that allows players to refill their blood pool.",
   "version_number": "1.0.0",
   "dependencies": [

@@ -1,5 +1,5 @@
 {
-  "name": "VMods - Recover Empty Containers",
+  "name": "VMods_Recover_Empty_Containers",
   "description": "A mod that allows players to recover empty containers when drinking potions or brews.",
   "version_number": "1.0.0",
   "dependencies": [

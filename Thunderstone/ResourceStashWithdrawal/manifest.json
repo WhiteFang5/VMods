@@ -1,5 +1,5 @@
 {
-  "name": "VMods - Resource Stash Withdrawal",
+  "name": "VMods_Resource_Stash_Withdrawal",
   "description": "A mod that allows players to withdraw items for a recipe directly from their stash.",
   "version_number": "1.0.0",
   "dependencies": [

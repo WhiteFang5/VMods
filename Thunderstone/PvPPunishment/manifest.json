@@ -1,5 +1,5 @@
 {
-  "name": "VMods - PvP Punishment",
+  "name": "VMods_PvP_Punishment",
   "description": "A mod that punishes low-level kills.",
   "version_number": "1.0.0",
   "dependencies": [
