@@ -1,0 +1,184 @@
+﻿using ProjectM;
+using ProjectM.Network;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.Entities;
+using Wetstone.API;
+
+namespace VMods.Shared
+{
+	public static class HighestGearScoreSystem
+	{
+		#region Variables
+
+		private static Dictionary<ulong, GearScoreData> _gearScoreData;
+
+		#endregion
+
+		#region Properties
+
+		private static string HighestGearScoreFileName => $"{Utils.PluginName}-HighestGearScore.json";
+
+		#endregion
+
+		#region Public Methods
+
+		public static void Initialize()
+		{
+			_gearScoreData = VModStorage.Load(HighestGearScoreFileName, () => new Dictionary<ulong, GearScoreData>());
+
+			VModStorage.SaveEvent += Save;
+			EquipmentHooks.EquipmentChangedEvent += OnEquipmentChanged;
+			VampireDownedHook.VampireDownedEvent += OnVampireDowned;
+		}
+
+		public static void Deinitialize()
+		{
+			VampireDownedHook.VampireDownedEvent -= OnVampireDowned;
+			EquipmentHooks.EquipmentChangedEvent -= OnEquipmentChanged;
+			VModStorage.SaveEvent -= Save;
+		}
+
+		public static void Save()
+		{
+			PruneHighestGearScores();
+
+			VModStorage.Save(HighestGearScoreFileName, _gearScoreData);
+		}
+
+		public static float GetCurrentOrHighestGearScore(FromCharacter fromCharacter)
+		{
+			var entityManager = VWorld.Server.EntityManager;
+			if(HighestGearScoreSystemConfig.HighestGearScoreSystemEnabled.Value)
+			{
+				PruneHighestGearScores();
+
+				var user = entityManager.GetComponentData<User>(fromCharacter.User);
+				if(_gearScoreData.TryGetValue(user.PlatformId, out var gearScoreData))
+				{
+					return gearScoreData.HighestGearScore;
+				}
+			}
+			return GetCurrentGearScore(fromCharacter, entityManager);
+		}
+
+		public static float GetCurrentGearScore(FromCharacter fromCharacter, EntityManager entityManager)
+		{
+			return GetCurrentGearScore(fromCharacter.Character, entityManager);
+		}
+
+		public static float GetCurrentGearScore(Entity characterEntity, EntityManager entityManager)
+		{
+			var equipment = entityManager.GetComponentData<Equipment>(characterEntity);
+			return equipment.ArmorLevel + equipment.WeaponLevel + equipment.SpellLevel;
+		}
+
+		#endregion
+
+		#region Private Methods
+
+		private static void PruneHighestGearScores()
+		{
+			var now = DateTime.UtcNow;
+			var keys = _gearScoreData.Keys.ToList();
+			var duration = HighestGearScoreSystemConfig.HighestGearScoreDuration.Value;
+			foreach(var key in keys)
+			{
+				var gearScoreData = _gearScoreData[key];
+				if(now.Subtract(gearScoreData.LastUpdated).TotalSeconds > duration)
+				{
+					_gearScoreData.Remove(key);
+				}
+			}
+		}
+
+		private static void OnEquipmentChanged(FromCharacter fromCharacter)
+		{
+			if(!HighestGearScoreSystemConfig.HighestGearScoreSystemEnabled.Value)
+			{
+				return;
+			}
+
+			var entityManager = VWorld.Server.EntityManager;
+			var user = entityManager.GetComponentData<User>(fromCharacter.User);
+			if(!_gearScoreData.TryGetValue(user.PlatformId, out var gearScoreData))
+			{
+				gearScoreData = new GearScoreData();
+				_gearScoreData.Add(user.PlatformId, gearScoreData);
+			}
+
+			if(DateTime.UtcNow.Subtract(gearScoreData.LastUpdated).TotalSeconds >= 30f)
+			{
+				gearScoreData.HighestGearScore = 0f;
+			}
+
+			float gearScore = GetCurrentGearScore(fromCharacter.Character, entityManager);
+			gearScoreData.HighestGearScore = Math.Max(gearScoreData.HighestGearScore, gearScore);
+			gearScoreData.LastUpdated = DateTime.UtcNow;
+
+#if DEBUG
+			//var message = $"Highest Gearscore Updated: {gearScoreData.HighestGearScore} (Current: {gearScore})";
+			//Utils.Logger.LogMessage(message);
+			//user.SendSystemMessage($"Highest Gearscore Updated: {gearScoreData.HighestGearScore} (Current: {gearScore})");
+#endif
+		}
+
+		private static void OnVampireDowned(Entity killer, Entity victim)
+		{
+			var entityManager = VWorld.Server.EntityManager;
+			var victimCharacter = entityManager.GetComponentData<PlayerCharacter>(victim);
+			var victumUserEntity = victimCharacter.UserEntity._Entity;
+			var victumUser = entityManager.GetComponentData<User>(victumUserEntity);
+
+			_gearScoreData.Remove(victumUser.PlatformId);
+		}
+
+		[Command("highestgs,hgs,higs,highgs,highestgearscore", "highestgs [<playername>]", "Tells you what the highest gear score is for the given player (or yourself when noplayername is given)", true)]
+		private static void OnHighestGearScoreCommand(Command command)
+		{
+			var entityManager = VWorld.Server.EntityManager;
+			(var searchUsername, var fromCharacter) = command.GetFromCharacter(entityManager: entityManager);
+
+			if(fromCharacter.HasValue)
+			{
+				var user = entityManager.GetComponentData<User>(fromCharacter.Value.User);
+				if(_gearScoreData.TryGetValue(user.PlatformId, out var gearScoreData))
+				{
+					TimeSpan diff = DateTime.UtcNow.Subtract(gearScoreData.LastUpdated);
+					command.User.SendSystemMessage($"[{Utils.PluginName}] The Highest Gear Score for <color=#ffffff>{searchUsername}</color> (Lv: {GetCurrentGearScore(fromCharacter.Value, entityManager)}) was <color=#00ff00>{gearScoreData.HighestGearScore}</color> (Last updated {diff.ToAgoString()} ago).");
+				}
+				else
+				{
+					command.User.SendSystemMessage($"[{Utils.PluginName}] No Highest Gear Score is recorded for <color=#ffffff>{searchUsername}</color> (Lv: {GetCurrentGearScore(fromCharacter.Value, entityManager)}).");
+				}
+			}
+		}
+
+		[Command("clearhgs,resethgs,clearhighestgearscore,resethighestgearscore", "clearhgs [<playername>]", "Removes the current Highest Gear Score record for the given player (or yourself when noplayername is given)", true)]
+		private static void OnResetHighestGearScoreCommand(Command command)
+		{
+			var entityManager = VWorld.Server.EntityManager;
+			(var searchUsername, var fromCharacter) = command.GetFromCharacter(entityManager: entityManager);
+
+			if(fromCharacter.HasValue)
+			{
+				var user = entityManager.GetComponentData<User>(fromCharacter.Value.User);
+				_gearScoreData.Remove(user.PlatformId);
+				command.User.SendSystemMessage($"[{Utils.PluginName}] Removed the Highest Gear Score record for <color=#ffffff>{searchUsername}</color>.");
+			}
+		}
+
+		#endregion
+
+		#region Nested
+
+		private class GearScoreData
+		{
+			public float HighestGearScore { get; set; }
+			public DateTime LastUpdated { get; set; }
+		}
+
+		#endregion
+	}
+}
