@@ -1,0 +1,10 @@
+{
+  "name": "VMods - PvP Punishment",
+  "description": "A mod that punishes low-level kills.",
+  "version_number": "1.0.0",
+  "dependencies": [
+    "BepInEx-BepInExPack_V_Rising-1.0.0",
+    "molenzwiebel-Wetstone-1.1.0"
+  ],
+  "website_url": "https://github.com/WhiteFang5/VMods#pvp-punishment"
+}

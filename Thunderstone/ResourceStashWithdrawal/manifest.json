@@ -1,0 +1,10 @@
+{
+  "name": "VMods - Resource Stash Withdrawal",
+  "description": "A mod that allows players to withdraw items for a recipe directly from their stash.",
+  "version_number": "1.0.0",
+  "dependencies": [
+    "BepInEx-BepInExPack_V_Rising-1.0.0",
+    "molenzwiebel-Wetstone-1.1.0"
+  ],
+  "website_url": "https://github.com/WhiteFang5/VMods#resource-stash-withdrawal"
+}
