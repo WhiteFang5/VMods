@@ -50,6 +50,7 @@ namespace VMods.Shared
 		public static float GetCurrentOrHighestGearScore(FromCharacter fromCharacter)
 		{
 			var entityManager = VWorld.Server.EntityManager;
+			var currentGS = GetCurrentGearScore(fromCharacter, entityManager);
 			if(HighestGearScoreSystemConfig.HighestGearScoreSystemEnabled.Value)
 			{
 				PruneHighestGearScores();
@@ -57,10 +58,10 @@ namespace VMods.Shared
 				var user = entityManager.GetComponentData<User>(fromCharacter.User);
 				if(_gearScoreData.TryGetValue(user.PlatformId, out var gearScoreData))
 				{
-					return gearScoreData.HighestGearScore;
+					return Math.Max(currentGS, gearScoreData.HighestGearScore);
 				}
 			}
-			return GetCurrentGearScore(fromCharacter, entityManager);
+			return currentGS;
 		}
 
 		public static float GetCurrentGearScore(FromCharacter fromCharacter, EntityManager entityManager)
