@@ -46,6 +46,7 @@ When a player drinks a potion or brew, an empty container (glass bottle or cante
 
 ## Resource Stash Withdrawal
 A server & client side mod that allows players to withdraw items for a recipe directly from their stash.  
+This mod also adds the stash count of items to the tooltips (given that you're in/near your base)  
   
 When a player is at a crafting or other workstation, he/she can click on the recipe or an individual component of a recipe with their middle-mouse button to withdraw the missing item(s) directly from their stash.  
 (The withdraw the full amount, CTRL+Middle Mouse Button can be used)  
