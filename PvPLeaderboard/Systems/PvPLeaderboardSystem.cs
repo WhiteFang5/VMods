@@ -86,7 +86,7 @@ namespace VMods.PvPLeaderboard
 
 			if(diff >= PvPLeaderboardConfig.PvPLeaderboardLevelDifference.Value)
 			{
-				Utils.Logger.LogMessage($"Vampire {killerUser.CharacterName} (Lv: {killerLevel}; Current Lv: {HighestGearScoreSystem.GetCurrentGearScore(killer, entityManager)}) has grief-killed{victimUser.CharacterName} (Lv {victimLevel}; Current Lv: {HighestGearScoreSystem.GetCurrentGearScore(killer, entityManager)})!");
+				Utils.Logger.LogMessage($"Vampire {killerUser.CharacterName} (Lv: {killerLevel}; Current Lv: {HighestGearScoreSystem.GetCurrentGearScore(killer, entityManager)}) has grief-killed {victimUser.CharacterName} (Lv {victimLevel}; Current Lv: {HighestGearScoreSystem.GetCurrentGearScore(killer, entityManager)})!");
 				if(PvPLeaderboardConfig.PvPLeaderboardAnnounceLowLevelKill.Value)
 				{
 					ServerChatUtils.SendSystemMessageToAllClients(entityManager, $"Vampire <color=#ffffff>{killerUser.CharacterName}</color> (Lv {killerLevel}) has grief-killed <color=#ffffff>{victimUser.CharacterName}</color> (Lv {victimLevel})!");
