@@ -23,6 +23,14 @@ namespace VMods.Shared
 			Character = user.LocalCharacter._Entity,
 		});
 
+		public VModCharacter(FromCharacter fromCharacter, EntityManager? entityManager = null)
+		{
+			entityManager ??= Utils.CurrentWorld.EntityManager;
+			User = entityManager.Value.GetComponentData<User>(fromCharacter.User);
+			Character = entityManager.Value.GetComponentData<PlayerCharacter>(fromCharacter.Character);
+			FromCharacter = fromCharacter;
+		}
+
 		public VModCharacter(Entity userEntity, Entity charEntity, EntityManager? entityManager = null)
 		{
 			entityManager ??= Utils.CurrentWorld.EntityManager;

@@ -101,3 +101,8 @@ Both the amount of offenses before being punishes as well as the punishment itse
   * % of reduced Spell Power
 
 </details>
+
+## Chest PvP Protection
+A server-side only mod that prevents looting of enemy player chests/workstations by players with the PvP Protection buff.  
+  
+Besides looting, it'll also prevent moving, sorting, swapping and merging ("compilsively count") of items within those chests/workstations.

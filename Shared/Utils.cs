@@ -20,6 +20,8 @@ namespace VMods.Shared
 
 		public static readonly PrefabGUID SevereGarlicDebuff = new(1582196539);
 
+		public static readonly PrefabGUID PvPProtectionBuff = new(1111481396);
+
 		#endregion
 
 		#region Variables
@@ -287,6 +289,17 @@ namespace VMods.Shared
 			foreach(var t in types)
 			{
 				Logger.LogMessage($"Component Type: {t} (Shared? {t.IsSharedComponent}) | {t.GetManagedType().FullName}");
+			}
+			Logger.LogMessage($"---");
+		}
+
+		public static void LogAllComponentTypes(EntityQuery entityQuery)
+		{
+			var types = entityQuery.GetQueryTypes();
+			Logger.LogMessage($"---");
+			foreach(var t in types)
+			{
+				Logger.LogMessage($"Query Component Type: {t}");
 			}
 			Logger.LogMessage($"---");
 		}
