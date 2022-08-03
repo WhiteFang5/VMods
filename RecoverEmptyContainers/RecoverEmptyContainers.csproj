@@ -4,7 +4,7 @@
     <AssemblyName>VMods.RecoverEmptyContainers</AssemblyName>
     <RootNamespace>VMods.RecoverEmptyContainers</RootNamespace>
     <Description>Allows a player to recover an empty container when consuming a potion/brew</Description>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
@@ -17,7 +17,9 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <Compile Include="..\Shared\BuffSystemHook.cs" Link="Shared\BuffSystemHook.cs" />
     <Compile Include="..\Shared\Utils.cs" Link="Shared\Utils.cs" />
+    <Compile Include="..\Shared\VModCharacter.cs" Link="Shared\VModCharacter.cs" />
   </ItemGroup>
   
   <ItemGroup>

@@ -5,6 +5,9 @@
 * Initial release
 
 ## Recover Empty Containers
+### v1.0.1
+* Fixed an exploit where you could get infinite empty containers when cancelling the ability usage of the Potion/Brew
+
 ### v1.0.0
 * Initial release
 

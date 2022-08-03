@@ -43,6 +43,18 @@ namespace VMods.Shared
 			};
 		}
 
+		public VModCharacter(Entity charEntity, EntityManager? entityManager = null)
+		{
+			entityManager ??= Utils.CurrentWorld.EntityManager;
+			Character = entityManager.Value.GetComponentData<PlayerCharacter>(charEntity);
+			User = entityManager.Value.GetComponentData<User>(Character.UserEntity._Entity);
+			FromCharacter = new FromCharacter()
+			{
+				User = Character.UserEntity._Entity,
+				Character = User.LocalCharacter._Entity,
+			};
+		}
+
 		#endregion
 
 		#region Public Methods

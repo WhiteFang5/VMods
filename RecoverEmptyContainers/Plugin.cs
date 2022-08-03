@@ -10,7 +10,7 @@ namespace VMods.RecoverEmptyContainers
 	[BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
 	[BepInDependency("xyz.molenzwiebel.wetstone")]
 	[Reloadable]
-	public class Plugin : BasePlugin
+	public class Plugin : BasePlugin, IRunOnInitialized
 	{
 		#region Variables
 
@@ -28,11 +28,17 @@ namespace VMods.RecoverEmptyContainers
 				return;
 			}
 			Utils.Initialize(Log, PluginInfo.PLUGIN_NAME);
+
 			RecoverEmptyContainersConfig.Initialize(Config);
 
 			_hooks = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
 
 			Log.LogInfo($"Plugin {PluginInfo.PLUGIN_NAME} (v{PluginInfo.PLUGIN_VERSION}) is loaded!");
+		}
+
+		public void OnGameInitialized()
+		{
+			RecoverEmptyContainersSystem.Initialize();
 		}
 
 		public sealed override bool Unload()
@@ -42,6 +48,7 @@ namespace VMods.RecoverEmptyContainers
 				return true;
 			}
 			_hooks?.UnpatchSelf();
+			RecoverEmptyContainersSystem.Deinitialize();
 			Config.Clear();
 			Utils.Deinitialize();
 			return true;
