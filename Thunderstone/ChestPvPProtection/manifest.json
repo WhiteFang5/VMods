@@ -1,7 +1,7 @@
 {
   "name": "VMods_Chest_PvP_Protection",
   "description": "A mod that that prevents looting of enemy player chests/workstations by players with the PvP Protection buff.",
-  "version_number": "1.0.0",
+  "version_number": "1.0.1",
   "dependencies": [
     "BepInEx-BepInExPack_V_Rising-1.0.0",
     "molenzwiebel-Wetstone-1.1.0"
