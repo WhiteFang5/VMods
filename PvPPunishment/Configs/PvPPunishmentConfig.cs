@@ -21,6 +21,7 @@ namespace VMods.PvPPunishment
 		public static ConfigEntry<float> PvPPunishmentSilverResistReduction { get; private set; }
 		public static ConfigEntry<float> PvPPunishmentPhysPowerReduction { get; private set; }
 		public static ConfigEntry<float> PvPPunishmentSpellPowerReduction { get; private set; }
+		public static ConfigEntry<bool> PvPPunishmentAnnounceLowLevelKill { get; private set; }
 
 		#endregion
 
@@ -43,6 +44,7 @@ namespace VMods.PvPPunishment
 			PvPPunishmentSilverResistReduction = config.Bind(nameof(PvPPunishmentConfig), nameof(PvPPunishmentSilverResistReduction), 15f, "The amount of reduced Silver Resistance when a player is punished.");
 			PvPPunishmentPhysPowerReduction = config.Bind(nameof(PvPPunishmentConfig), nameof(PvPPunishmentPhysPowerReduction), 15f, "The percentage of reduced Physical Power when a player is punished.");
 			PvPPunishmentSpellPowerReduction = config.Bind(nameof(PvPPunishmentConfig), nameof(PvPPunishmentSpellPowerReduction), 15f, "The percentage of reduced Spell Power when a player is punished.");
+			PvPPunishmentAnnounceLowLevelKill = config.Bind(nameof(PvPPunishmentConfig), nameof(PvPPunishmentAnnounceLowLevelKill), false, "When enabled, a kill of a lower level player is announced server-wide.");
 		}
 
 		#endregion

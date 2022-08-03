@@ -20,6 +20,12 @@
 * Initial release
 
 ## PvP Punishment
+### v1.0.3
+* Added a new config option to announce a grief-kill (exactly the same as the PvP Leaderboard mod v1.0.1)
+
+### v1.0.1, v1.0.2
+* F*cked up the release of another plugin, so we're skipping these versions.
+
 ### v1.0.0
 * Initial release
 

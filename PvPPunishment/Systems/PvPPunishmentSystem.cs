@@ -144,6 +144,11 @@ namespace VMods.PvPPunishment
 					//Utils.SendMessage(victimUserEntity, msg, ServerChatMessageType.System);
 				}
 #endif
+				Utils.Logger.LogMessage($"Vampire {killerUser.CharacterName} (Lv: {killerLevel}; Current Lv: {HighestGearScoreSystem.GetCurrentGearScore(killer, entityManager)}) has grief-killed {victimUser.CharacterName} (Lv {victimLevel}; Current Lv: {HighestGearScoreSystem.GetCurrentGearScore(victim, entityManager)})!");
+				if(PvPPunishmentConfig.PvPPunishmentAnnounceLowLevelKill.Value)
+				{
+					ServerChatUtils.SendSystemMessageToAllClients(entityManager, $"Vampire <color=#ffffff>{killerUser.CharacterName}</color> (Lv {killerLevel}) has grief-killed <color=#ffffff>{victimUser.CharacterName}</color> (Lv {victimLevel})!");
+				}
 			}
 #if DEBUG
 			else
