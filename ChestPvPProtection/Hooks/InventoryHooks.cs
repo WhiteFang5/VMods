@@ -32,7 +32,7 @@ namespace VMods.ChestPvPProtection
 
 			var server = VWorld.Server;
 			var entityManager = server.EntityManager;
-			var networkIdToEntityMap = __instance._NetworkIdSystem._NetworkIdToEntityMap;
+			var networkIdToEntityMap = server.GetExistingSystem<NetworkIdSystem>()._NetworkIdToEntityMap;
 
 			var entities = __instance._MoveItemBetweenInventoriesEventQuery.ToEntityArray(Allocator.Temp);
 			foreach(var entity in entities)
@@ -54,7 +54,7 @@ namespace VMods.ChestPvPProtection
 
 			var server = VWorld.Server;
 			var entityManager = server.EntityManager;
-			var networkIdToEntityMap = __instance._NetworkIdSystem._NetworkIdToEntityMap;
+			var networkIdToEntityMap = server.GetExistingSystem<NetworkIdSystem>()._NetworkIdToEntityMap;
 
 			var entities = __instance.__MoveAllItemsJob_entityQuery.ToEntityArray(Allocator.Temp);
 			foreach(var entity in entities)
@@ -76,7 +76,7 @@ namespace VMods.ChestPvPProtection
 
 			var server = VWorld.Server;
 			var entityManager = server.EntityManager;
-			var networkIdToEntityMap = __instance._NetworkIdSystem._NetworkIdToEntityMap;
+			var networkIdToEntityMap = server.GetExistingSystem<NetworkIdSystem>()._NetworkIdToEntityMap;
 
 			var entities = __instance.__DropInventoryItemJob_entityQuery.ToEntityArray(Allocator.Temp);
 			foreach(var entity in entities)
@@ -98,7 +98,7 @@ namespace VMods.ChestPvPProtection
 
 			var server = VWorld.Server;
 			var entityManager = server.EntityManager;
-			var networkIdToEntityMap = __instance._NetworkIdSystem._NetworkIdToEntityMap;
+			var networkIdToEntityMap = server.GetExistingSystem<NetworkIdSystem>()._NetworkIdToEntityMap;
 
 			var entities = __instance._Query.ToEntityArray(Allocator.Temp);
 			foreach(var entity in entities)
@@ -120,7 +120,7 @@ namespace VMods.ChestPvPProtection
 
 			var server = VWorld.Server;
 			var entityManager = server.EntityManager;
-			var networkIdToEntityMap = __instance._NetworkIdSystem._NetworkIdToEntityMap;
+			var networkIdToEntityMap = server.GetExistingSystem<NetworkIdSystem>()._NetworkIdToEntityMap;
 
 			var entities = __instance._Query.ToEntityArray(Allocator.Temp);
 			foreach(var entity in entities)
@@ -142,7 +142,7 @@ namespace VMods.ChestPvPProtection
 
 			var server = VWorld.Server;
 			var entityManager = server.EntityManager;
-			var networkIdToEntityMap = __instance._NetworkIdSystem._NetworkIdToEntityMap;
+			var networkIdToEntityMap = server.GetExistingSystem<NetworkIdSystem>()._NetworkIdToEntityMap;
 
 			var entities = __instance._Query.ToEntityArray(Allocator.Temp);
 			foreach(var entity in entities)

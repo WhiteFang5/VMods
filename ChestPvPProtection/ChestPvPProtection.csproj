@@ -4,7 +4,7 @@
     <AssemblyName>VMods.ChestPvPProtection</AssemblyName>
     <RootNamespace>VMods.ChestPvPProtection</RootNamespace>
     <Description>A mod that prevents looting of enemy player chests/workstations by players with the PvP Protection buff</Description>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
