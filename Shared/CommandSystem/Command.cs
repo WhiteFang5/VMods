@@ -1,7 +1,4 @@
-﻿using ProjectM.Network;
-using Unity.Entities;
-
-namespace VMods.Shared
+﻿namespace VMods.Shared
 {
 	public class Command
 	{
@@ -10,9 +7,7 @@ namespace VMods.Shared
 		public string Name { get; }
 		public string[] Args { get; }
 
-		public User User { get; }
-		public Entity SenderUserEntity { get; }
-		public Entity SenderCharEntity { get; }
+		public VModCharacter VModCharacter { get; }
 
 		public bool Used { get; private set; }
 
@@ -20,8 +15,8 @@ namespace VMods.Shared
 
 		#region Lifecycle
 
-		public Command(User user, Entity senderUserEntity, Entity senderCharEntity, string name, params string[] args)
-			=> (User, SenderUserEntity, SenderCharEntity, Name, Args) = (user, senderUserEntity, senderCharEntity, name, args);
+		public Command(VModCharacter vmodCharacter, string name, params string[] args)
+			=> (VModCharacter, Name, Args) = (vmodCharacter, name, args);
 
 		#endregion
 

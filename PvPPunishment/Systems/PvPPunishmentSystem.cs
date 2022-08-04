@@ -231,11 +231,11 @@ namespace VMods.PvPPunishment
 			{
 				if(vmodCharacter.Value.HasBuff(Utils.SevereGarlicDebuff, entityManager))
 				{
-					command.User.SendSystemMessage($"Vampire <color=#ffffff>{searchUsername}</color> <color=#ff0000>is</color> currently punished.");
+					command.VModCharacter.SendSystemMessage($"Vampire <color=#ffffff>{searchUsername}</color> <color=#ff0000>is</color> currently punished.");
 				}
 				else
 				{
-					command.User.SendSystemMessage($"Vampire <color=#ffffff>{searchUsername}</color> <color=#00ff00>isn't</color> punished.");
+					command.VModCharacter.SendSystemMessage($"Vampire <color=#ffffff>{searchUsername}</color> <color=#00ff00>isn't</color> punished.");
 				}
 			}
 			command.Use();
@@ -250,7 +250,7 @@ namespace VMods.PvPPunishment
 			if(vmodCharacter.HasValue)
 			{
 				vmodCharacter.Value.ApplyBuff(Utils.SevereGarlicDebuff);
-				command.User.SendSystemMessage($"Vampire <color=#ffffff>{searchUsername}</color> has been punished.");
+				command.VModCharacter.SendSystemMessage($"Vampire <color=#ffffff>{searchUsername}</color> has been punished.");
 			}
 			command.Use();
 		}
@@ -264,7 +264,7 @@ namespace VMods.PvPPunishment
 			if(vmodCharacter.HasValue)
 			{
 				vmodCharacter.Value.RemoveBuff(Utils.SevereGarlicDebuff);
-				command.User.SendSystemMessage($"Vampire <color=#ffffff>{searchUsername}</color> has been un-punished.");
+				command.VModCharacter.SendSystemMessage($"Vampire <color=#ffffff>{searchUsername}</color> has been un-punished.");
 			}
 			command.Use();
 		}

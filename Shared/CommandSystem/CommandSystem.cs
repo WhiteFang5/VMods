@@ -59,12 +59,12 @@ namespace VMods.Shared
 
 		public static void SendInvalidCommandMessage(Command command, bool invalidArgument = false)
 		{
-			SendInvalidCommandMessage(command.User, invalidArgument);
+			SendInvalidCommandMessage(command.VModCharacter, invalidArgument);
 		}
 
-		public static void SendInvalidCommandMessage(User user, bool invalidArgument = false)
+		public static void SendInvalidCommandMessage(VModCharacter vmodCharacter, bool invalidArgument = false)
 		{
-			user.SendSystemMessage($"<color=#ff0000>Invalid command{(invalidArgument ? " argument" : string.Empty)}. Check {CommandSystemConfig.CommandSystemPrefix.Value}help [<command>] for more information.</color>");
+			vmodCharacter.SendSystemMessage($"<color=#ff0000>Invalid command{(invalidArgument ? " argument" : string.Empty)}. Check {CommandSystemConfig.CommandSystemPrefix.Value}help [<command>] for more information.</color>");
 		}
 
 		#endregion
@@ -115,7 +115,7 @@ namespace VMods.Shared
 					if(timeDiff.TotalSeconds < CommandSystemConfig.CommandSystemCommandCooldown.Value)
 					{
 						int waitTime = (int)Math.Ceiling(CommandSystemConfig.CommandSystemCommandCooldown.Value - timeDiff.TotalSeconds);
-						chatEvent.User.SendSystemMessage($"<color=#ff0000>Please wait for {waitTime} second(s) before sending another command.</color>");
+						user.SendSystemMessage($"<color=#ff0000>Please wait for {waitTime} second(s) before sending another command.</color>");
 						chatEvent.Cancel();
 						return;
 					}
@@ -124,7 +124,7 @@ namespace VMods.Shared
 			}
 
 			// Fire the command (so an event handler can actually handle/execute it)
-			Command command = new(user, chatEvent.SenderUserEntity, chatEvent.SenderCharacterEntity, name, args);
+			Command command = new(new VModCharacter(chatEvent.SenderUserEntity, chatEvent.SenderCharacterEntity), name, args);
 
 			foreach((var method, var attribute) in _commandMethods)
 			{
@@ -196,19 +196,19 @@ namespace VMods.Shared
 		private static void OnHelpCommand(Command command)
 		{
 			var commandPrefix = CommandSystemConfig.CommandSystemPrefix.Value;
-			var user = command.User;
+			var vmodCharacter = command.VModCharacter;
 			switch(command.Args.Length)
 			{
 				case 0:
 					{
-						user.SendSystemMessage($"List of {Utils.PluginName} commands:");
+						vmodCharacter.SendSystemMessage($"List of {Utils.PluginName} commands:");
 						_commandMethods.ForEach(x => SendCommandInfo(x.attribute));
 						_commandReflectionMethods.ForEach(x => SendCommandInfo(x.attribute));
 
 						// Nested Method(s)
 						void SendCommandInfo(CommandAttribute attribute)
 						{
-							if(attribute.ReqAdmin && !user.IsAdmin)
+							if(attribute.ReqAdmin && !vmodCharacter.IsAdmin)
 							{
 								return;
 							}
@@ -218,7 +218,7 @@ namespace VMods.Shared
 								message += " - <color=#ff0000>[ADMIN]</color>";
 							}
 							message += $" - <color=#ffffff>{attribute.Description}</color>";
-							user.SendSystemMessage(message);
+							vmodCharacter.SendSystemMessage(message);
 						}
 					}
 					break;
@@ -239,18 +239,18 @@ namespace VMods.Shared
 						}
 
 						// Check the found info
-						if(attribute == null || attribute.ReqAdmin && !user.IsAdmin)
+						if(attribute == null || attribute.ReqAdmin && !vmodCharacter.IsAdmin)
 						{
 							return;
 						}
 
-						user.SendSystemMessage($"Help for <color=#00ff00>{commandPrefix}{attribute.Names[0]}</color>");
+						vmodCharacter.SendSystemMessage($"Help for <color=#00ff00>{commandPrefix}{attribute.Names[0]}</color>");
 						if(attribute.Names.Count > 1)
 						{
-							user.SendSystemMessage($"<color=#ffffff>Aliases: {string.Join(", ", attribute.Names.Skip(1).Select(x => $"{commandPrefix}{x}"))}</color>");
+							vmodCharacter.SendSystemMessage($"<color=#ffffff>Aliases: {string.Join(", ", attribute.Names.Skip(1).Select(x => $"{commandPrefix}{x}"))}</color>");
 						}
-						user.SendSystemMessage($"<color=#ffffff>Description: {attribute.Description}</color>");
-						user.SendSystemMessage($"<color=#ffffff>Usage: {commandPrefix}{attribute.Usage}</color>");
+						vmodCharacter.SendSystemMessage($"<color=#ffffff>Description: {attribute.Description}</color>");
+						vmodCharacter.SendSystemMessage($"<color=#ffffff>Usage: {commandPrefix}{attribute.Usage}</color>");
 					}
 					return;
 

@@ -2,6 +2,7 @@
 using ProjectM.Network;
 using Unity.Collections;
 using Unity.Entities;
+using Wetstone.API;
 
 namespace VMods.Shared
 {
@@ -12,6 +13,12 @@ namespace VMods.Shared
 		public readonly User User;
 		public readonly PlayerCharacter Character;
 		public readonly FromCharacter FromCharacter;
+
+		#endregion
+
+		#region Properties
+
+		public bool IsAdmin => User.IsAdmin;
 
 		#endregion
 
@@ -89,6 +96,11 @@ namespace VMods.Shared
 		{
 			entityManager ??= Utils.CurrentWorld.EntityManager;
 			return BuffUtility.HasBuff(entityManager.Value, FromCharacter.Character, buffGUID);
+		}
+
+		public void SendSystemMessage(string message)
+		{
+			User.SendSystemMessage(message);
 		}
 
 		#endregion

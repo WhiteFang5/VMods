@@ -134,7 +134,7 @@ namespace VMods.PvPLeaderboard
 					pvpStats = new PvPStats();
 					_pvpStats[user.PlatformId] = pvpStats;
 				}
-				command.User.SendSystemMessage($"<color=#ffffff>{searchUsername}</color> K/D: {pvpStats.KDRatio} [{pvpStats.Kills}/{pvpStats.Deaths}] - Rank {PvPLeaderboard.ToList().FindIndex(x => x.Key == user.PlatformId) + 1}");
+				command.VModCharacter.SendSystemMessage($"<color=#ffffff>{searchUsername}</color> K/D: {pvpStats.KDRatio} [{pvpStats.Kills}/{pvpStats.Deaths}] - Rank {PvPLeaderboard.ToList().FindIndex(x => x.Key == user.PlatformId) + 1}");
 			}
 			command.Use();
 		}
@@ -153,17 +153,17 @@ namespace VMods.PvPLeaderboard
 			var maxPage = (int)Math.Ceiling(_pvpStats.Count / (double)recordsPerPage);
 			page = Math.Min(maxPage - 1, page);
 
-			var user = command.User;
+			var vmodCharacter = command.VModCharacter;
 			var entityManager = VWorld.Server.EntityManager;
 			var leaderboard = PvPLeaderboard.Skip(page * recordsPerPage).Take(recordsPerPage);
-			user.SendSystemMessage("========== PvP Leaderboard ==========");
+			vmodCharacter.SendSystemMessage("========== PvP Leaderboard ==========");
 			int rank = (page * recordsPerPage) + 1;
 			foreach((var platformId, var pvpStats) in leaderboard)
 			{
-				user.SendSystemMessage($"{rank}. <color=#ffffff>{Utils.GetCharacterName(platformId, entityManager)} : {pvpStats.KDRatio} [{pvpStats.Kills}/{pvpStats.Deaths}]</color>");
+				vmodCharacter.SendSystemMessage($"{rank}. <color=#ffffff>{Utils.GetCharacterName(platformId, entityManager)} : {pvpStats.KDRatio} [{pvpStats.Kills}/{pvpStats.Deaths}]</color>");
 				rank++;
 			}
-			user.SendSystemMessage($"=============== {page + 1}/{maxPage} ===============");
+			vmodCharacter.SendSystemMessage($"=============== {page + 1}/{maxPage} ===============");
 
 			command.Use();
 		}

@@ -77,7 +77,7 @@ namespace VMods.Shared
 		private static void OnSaveAllCommand(Command command)
 		{
 			SaveAll();
-			command.User.SendSystemMessage($"VMod Plugin '{Utils.PluginName}' saved successfully.");
+			command.VModCharacter.SendSystemMessage($"VMod Plugin '{Utils.PluginName}' saved successfully.");
 		}
 
 		#endregion

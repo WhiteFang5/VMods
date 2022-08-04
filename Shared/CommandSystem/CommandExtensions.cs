@@ -20,20 +20,15 @@ namespace VMods.Shared
 			}
 			else
 			{
-				searchUsername = command.User.CharacterName.ToString();
-				fromCharacter = command.ToVModCharacter(entityManager);
+				searchUsername = command.VModCharacter.User.CharacterName.ToString();
+				fromCharacter = command.VModCharacter;
 			}
 
 			if(sendCannotBeFoundMessage && !fromCharacter.HasValue)
 			{
-				command.User.SendSystemMessage($"[{Utils.PluginName}] Vampire <color=#ffffff>{searchUsername}</color> couldn't be found.");
+				command.VModCharacter.SendSystemMessage($"[{Utils.PluginName}] Vampire <color=#ffffff>{searchUsername}</color> couldn't be found.");
 			}
 			return (searchUsername, fromCharacter);
-		}
-
-		public static VModCharacter ToVModCharacter(this Command command, EntityManager? entityManager = null)
-		{
-			return new VModCharacter(command.SenderUserEntity, command.SenderCharEntity, entityManager);
 		}
 	}
 }

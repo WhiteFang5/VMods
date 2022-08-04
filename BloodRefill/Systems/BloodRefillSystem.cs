@@ -185,7 +185,7 @@ namespace VMods.BloodRefill
 		[Command("setblood", "setblood <blood-type> <blood-quality> [<gain-amount>]", "Sets your blood type to the specified blood-type and blood-quality, and optionally adds a given amount of blood (in Litres).", true)]
 		private static void OnSetBloodCommand(Command command)
 		{
-			var user = command.User;
+			var vmodCharacter = command.VModCharacter;
 			var argCount = command.Args.Length;
 			if(argCount >= 2)
 			{
@@ -206,7 +206,7 @@ namespace VMods.BloodRefill
 							}
 							else
 							{
-								user.SendSystemMessage($"<color=#ff0000>Invalid gain-amount '{searchBloodQuality}'. Should be between -10 and 10</color>");
+								vmodCharacter.SendSystemMessage($"<color=#ff0000>Invalid gain-amount '{searchBloodQuality}'. Should be between -10 and 10</color>");
 							}
 						}
 						else
@@ -216,18 +216,18 @@ namespace VMods.BloodRefill
 
 						if(addBloodAmount.HasValue)
 						{
-							ChangeBloodType(user, bloodType, bloodQuality, (int)(addBloodAmount.Value * 10f));
-							user.SendSystemMessage($"Changed blood type to <color=#ff0000>{bloodQuality}%</color> <color=#ffffff>{searchBloodType}</color> and added <color=#ff0000>{addBloodAmount.Value}L</color>");
+							ChangeBloodType(vmodCharacter.User, bloodType, bloodQuality, (int)(addBloodAmount.Value * 10f));
+							vmodCharacter.SendSystemMessage($"Changed blood type to <color=#ff0000>{bloodQuality}%</color> <color=#ffffff>{searchBloodType}</color> and added <color=#ff0000>{addBloodAmount.Value}L</color>");
 						}
 					}
 					else
 					{
-						user.SendSystemMessage($"<color=#ff0000>Invalid blood-quality '{searchBloodQuality}'. Should be between 1 and 100</color>");
+						vmodCharacter.SendSystemMessage($"<color=#ff0000>Invalid blood-quality '{searchBloodQuality}'. Should be between 1 and 100</color>");
 					}
 				}
 				else
 				{
-					user.SendSystemMessage($"<color=#ff0000>Invalid blood-type '{searchBloodType}'. Options are: {string.Join(", ", validBloodTypes.Select(x => x.ToString()))}</color>");
+					vmodCharacter.SendSystemMessage($"<color=#ff0000>Invalid blood-type '{searchBloodType}'. Options are: {string.Join(", ", validBloodTypes.Select(x => x.ToString()))}</color>");
 				}
 			}
 			else
