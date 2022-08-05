@@ -221,7 +221,7 @@ namespace VMods.PvPPunishment
 			}
 		}
 
-		[Command("ispunished", "ispunished [<playername>]", "Tell you if the the given player (or yourself when no playername is given) currently has the PvP Punishment buff", true)]
+		[Command("ispunished", "ispunished [<player-name>]", "Tell you if the the given player (or yourself when no playername is given) currently has the PvP Punishment buff", true)]
 		private static void OnIsPunishedPlayerCommand(Command command)
 		{
 			var entityManager = VWorld.Server.EntityManager;
@@ -241,7 +241,7 @@ namespace VMods.PvPPunishment
 			command.Use();
 		}
 
-		[Command("punish", "punish [<playername>]", "Adds (or refreshes) the PvP Punishment buff for the given player (or yourself when no playername is given)", true)]
+		[Command("punish", "punish [<player-name>]", "Adds (or refreshes) the PvP Punishment buff for the given player (or yourself when no playername is given)", true)]
 		private static void OnPunishPlayerCommand(Command command)
 		{
 			var entityManager = VWorld.Server.EntityManager;
@@ -255,7 +255,7 @@ namespace VMods.PvPPunishment
 			command.Use();
 		}
 
-		[Command("unpunish", "unpunish [<playername>]", "Removes the PvP Punishment buff for the given player (or yourself when no playername is given)", true)]
+		[Command("unpunish", "unpunish [<player-name>]", "Removes the PvP Punishment buff for the given player (or yourself when no playername is given)", true)]
 		private static void OnUnPunishPlayerCommand(Command command)
 		{
 			var entityManager = VWorld.Server.EntityManager;
