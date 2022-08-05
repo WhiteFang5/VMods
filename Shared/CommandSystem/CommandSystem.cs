@@ -1,10 +1,10 @@
-﻿using ProjectM.Network;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Wetstone.API;
 using Wetstone.Hooks;
+using static VMods.Shared.CommandAttribute;
 
 namespace VMods.Shared
 {
@@ -21,7 +21,7 @@ namespace VMods.Shared
 		private static readonly Dictionary<ulong, DateTime> _lastUsedCommandTimes = new();
 
 		private static List<(MethodInfo method, CommandAttribute attribute)> _commandReflectionMethods;
-		private static readonly List<(Action<Command> method, CommandAttribute attribute)> _commandMethods = new();
+		private static readonly List<(string id, Action<Command> method, CommandAttribute attribute)> _commandMethods = new();
 
 		#endregion
 
@@ -47,9 +47,14 @@ namespace VMods.Shared
 			_commandMethods.Clear();
 		}
 
-		public static void RegisterCommand(Action<Command> commandMethod, CommandAttribute commandAttribute)
+		public static void RegisterCommand(string uniqueId, Action<Command> commandMethod, CommandAttribute commandAttribute)
 		{
-			_commandMethods.Add((commandMethod, commandAttribute));
+			_commandMethods.Add((uniqueId, commandMethod, commandAttribute));
+		}
+
+		public static void UnregisterCommand(string uniqueId)
+		{
+			_commandMethods.RemoveAll(x => x.id == uniqueId);
 		}
 
 		public static void UnregisterCommand(Action<Command> commandMethod, CommandAttribute commandAttribute)
@@ -126,9 +131,9 @@ namespace VMods.Shared
 			// Fire the command (so an event handler can actually handle/execute it)
 			Command command = new(new VModCharacter(chatEvent.SenderUserEntity, chatEvent.SenderCharacterEntity), name, args);
 
-			foreach((var method, var attribute) in _commandMethods)
+			foreach((_, var method, var attribute) in _commandMethods)
 			{
-				if(!attribute.Names.Contains(command.Name) || (attribute.ReqAdmin && !user.IsAdmin))
+				if(!attribute.Names.Contains(command.Name) || !command.VModCharacter.AdminLevel.HasReqLevel(attribute.ReqAdminLevel))
 				{
 					continue;
 				}
@@ -151,7 +156,7 @@ namespace VMods.Shared
 			{
 				foreach((var method, var attribute) in _commandReflectionMethods)
 				{
-					if(!attribute.Names.Contains(command.Name) || (attribute.ReqAdmin && !user.IsAdmin))
+					if(!attribute.Names.Contains(command.Name) || !command.VModCharacter.AdminLevel.HasReqLevel(attribute.ReqAdminLevel))
 					{
 						continue;
 					}
@@ -208,14 +213,22 @@ namespace VMods.Shared
 						// Nested Method(s)
 						void SendCommandInfo(CommandAttribute attribute)
 						{
-							if(attribute.ReqAdmin && !vmodCharacter.IsAdmin)
+							if(!vmodCharacter.AdminLevel.HasReqLevel(attribute.ReqAdminLevel))
 							{
 								return;
 							}
 							string message = $"<color=#00ff00>{string.Join(", ", attribute.Names.Select(x => $"{commandPrefix}{x}"))}</color>";
-							if(attribute.ReqAdmin)
+							switch(attribute.ReqAdminLevel)
 							{
-								message += " - <color=#ff0000>[ADMIN]</color>";
+								case AdminLevel.Moderator:
+									message += " - <color=#FFA500>[MOD]</color>";
+									break;
+								case AdminLevel.Admin:
+									message += " - <color=#ff0000>[ADMIN]</color>";
+									break;
+								case AdminLevel.SuperAdmin:
+									message += " - <color=#ff0000>[SUPER-ADMIN]</color>";
+									break;
 							}
 							message += $" - <color=#ffffff>{attribute.Description}</color>";
 							vmodCharacter.SendSystemMessage(message);
@@ -239,7 +252,7 @@ namespace VMods.Shared
 						}
 
 						// Check the found info
-						if(attribute == null || attribute.ReqAdmin && !vmodCharacter.IsAdmin)
+						if(attribute == null || !vmodCharacter.AdminLevel.HasReqLevel(attribute.ReqAdminLevel))
 						{
 							return;
 						}

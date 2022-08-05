@@ -6,6 +6,7 @@ using System.Linq;
 using Unity.Entities;
 using VMods.Shared;
 using Wetstone.API;
+using AdminLevel = VMods.Shared.CommandAttribute.AdminLevel;
 
 namespace VMods.PvPPunishment
 {
@@ -221,7 +222,7 @@ namespace VMods.PvPPunishment
 			}
 		}
 
-		[Command("ispunished", "ispunished [<player-name>]", "Tell you if the the given player (or yourself when no playername is given) currently has the PvP Punishment buff", true)]
+		[Command("ispunished", "ispunished [<player-name>]", "Tell you if the the given player (or yourself when no playername is given) currently has the PvP Punishment buff", AdminLevel.Admin)]
 		private static void OnIsPunishedPlayerCommand(Command command)
 		{
 			var entityManager = VWorld.Server.EntityManager;
@@ -241,7 +242,7 @@ namespace VMods.PvPPunishment
 			command.Use();
 		}
 
-		[Command("punish", "punish [<player-name>]", "Adds (or refreshes) the PvP Punishment buff for the given player (or yourself when no playername is given)", true)]
+		[Command("punish", "punish [<player-name>]", "Adds (or refreshes) the PvP Punishment buff for the given player (or yourself when no playername is given)", AdminLevel.Admin)]
 		private static void OnPunishPlayerCommand(Command command)
 		{
 			var entityManager = VWorld.Server.EntityManager;
@@ -255,7 +256,7 @@ namespace VMods.PvPPunishment
 			command.Use();
 		}
 
-		[Command("unpunish", "unpunish [<player-name>]", "Removes the PvP Punishment buff for the given player (or yourself when no playername is given)", true)]
+		[Command("unpunish", "unpunish [<player-name>]", "Removes the PvP Punishment buff for the given player (or yourself when no playername is given)", AdminLevel.Admin)]
 		private static void OnUnPunishPlayerCommand(Command command)
 		{
 			var entityManager = VWorld.Server.EntityManager;

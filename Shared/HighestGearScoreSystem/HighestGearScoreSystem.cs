@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Entities;
 using Wetstone.API;
+using AdminLevel = VMods.Shared.CommandAttribute.AdminLevel;
 
 namespace VMods.Shared
 {
@@ -140,7 +141,7 @@ namespace VMods.Shared
 			_gearScoreData.Remove(victumUser.PlatformId);
 		}
 
-		[Command("highestgs,hgs,higs,highgs,highestgearscore", "highestgs [<player-name>]", "Tells you what the highest gear score is for the given player (or yourself when noplayername is given)", true)]
+		[Command("highestgs,hgs,higs,highgs,highestgearscore", "highestgs [<player-name>]", "Tells you what the highest gear score is for the given player (or yourself when noplayername is given)", AdminLevel.Admin)]
 		private static void OnHighestGearScoreCommand(Command command)
 		{
 			var entityManager = VWorld.Server.EntityManager;
@@ -161,7 +162,7 @@ namespace VMods.Shared
 			}
 		}
 
-		[Command("clearhgs,resethgs,clearhighestgearscore,resethighestgearscore", "clearhgs [<player-name>]", "Removes the current Highest Gear Score record for the given player (or yourself when noplayername is given)", true)]
+		[Command("clearhgs,resethgs,clearhighestgearscore,resethighestgearscore", "clearhgs [<player-name>]", "Removes the current Highest Gear Score record for the given player (or yourself when noplayername is given)", AdminLevel.Admin)]
 		private static void OnResetHighestGearScoreCommand(Command command)
 		{
 			var entityManager = VWorld.Server.EntityManager;

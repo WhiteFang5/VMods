@@ -20,15 +20,26 @@ namespace VMods.Shared
 
 		public bool IsAdmin => User.IsAdmin;
 
+		public AdminLevel AdminLevel { get; }
+
+		public string CharacterName => User.CharacterName.ToString();
+
 		#endregion
 
 		#region Lifecycle
 
-		public VModCharacter(User user, PlayerCharacter character) => (User, Character, FromCharacter) = (user, character, FromCharacter = new FromCharacter()
+		public VModCharacter(User user, PlayerCharacter character, EntityManager? entityManager = null)
 		{
-			User = character.UserEntity._Entity,
-			Character = user.LocalCharacter._Entity,
-		});
+			entityManager ??= Utils.CurrentWorld.EntityManager;
+			User = user;
+			Character = character;
+			FromCharacter = new FromCharacter()
+			{
+				User = character.UserEntity._Entity,
+				Character = user.LocalCharacter._Entity,
+			};
+			AdminLevel = Utils.GetAdminLevel(FromCharacter.User, entityManager);
+		}
 
 		public VModCharacter(FromCharacter fromCharacter, EntityManager? entityManager = null)
 		{
@@ -36,6 +47,7 @@ namespace VMods.Shared
 			User = entityManager.Value.GetComponentData<User>(fromCharacter.User);
 			Character = entityManager.Value.GetComponentData<PlayerCharacter>(fromCharacter.Character);
 			FromCharacter = fromCharacter;
+			AdminLevel = Utils.GetAdminLevel(FromCharacter.User, entityManager);
 		}
 
 		public VModCharacter(Entity userEntity, Entity charEntity, EntityManager? entityManager = null)
@@ -48,23 +60,23 @@ namespace VMods.Shared
 				User = Character.UserEntity._Entity,
 				Character = User.LocalCharacter._Entity,
 			};
-		}
-
-		public VModCharacter(Entity charEntity, EntityManager? entityManager = null)
-		{
-			entityManager ??= Utils.CurrentWorld.EntityManager;
-			Character = entityManager.Value.GetComponentData<PlayerCharacter>(charEntity);
-			User = entityManager.Value.GetComponentData<User>(Character.UserEntity._Entity);
-			FromCharacter = new FromCharacter()
-			{
-				User = Character.UserEntity._Entity,
-				Character = User.LocalCharacter._Entity,
-			};
+			AdminLevel = Utils.GetAdminLevel(FromCharacter.User, entityManager);
 		}
 
 		#endregion
 
 		#region Public Methods
+
+		public static bool operator ==(VModCharacter left, VModCharacter right)
+		{
+			if(ReferenceEquals(left, right))
+			{
+				return true;
+			}
+			return left.User == right.User;
+		}
+
+		public static bool operator !=(VModCharacter left, VModCharacter right) => !(left == right);
 
 		public static VModCharacter? GetVModCharacter(string charactername, EntityManager? entityManager = null)
 		{
@@ -81,6 +93,21 @@ namespace VMods.Shared
 			}
 			return null;
 		}
+
+		public override bool Equals(object obj)
+		{
+			if(base.Equals(obj))
+			{
+				return true;
+			}
+			if(obj is VModCharacter vmodCharacter)
+			{
+				return this == vmodCharacter;
+			}
+			return false;
+		}
+
+		public override int GetHashCode() => (User, Character).GetHashCode();
 
 		public void ApplyBuff(PrefabGUID buffGUID)
 		{

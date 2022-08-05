@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text.Json;
-using Wetstone.API;
+using static VMods.Shared.CommandAttribute;
 
 namespace VMods.Shared
 {
@@ -73,7 +73,7 @@ namespace VMods.Shared
 
 		#region Private Methods
 
-		[Command("saveall", "saveall", "Saves all data of all VMod plugins", true)]
+		[Command("saveall", "saveall", "Saves all data of all VMod plugins", AdminLevel.Admin)]
 		private static void OnSaveAllCommand(Command command)
 		{
 			SaveAll();

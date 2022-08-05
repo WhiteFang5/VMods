@@ -15,7 +15,7 @@ namespace VMods.Shared
 
 			if(argIdx >= 0 && command.Args.Length >= (argIdx + 1))
 			{
-				searchUsername = command.Args[0];
+				searchUsername = command.Args[argIdx];
 				fromCharacter = VModCharacter.GetVModCharacter(searchUsername, entityManager);
 			}
 			else

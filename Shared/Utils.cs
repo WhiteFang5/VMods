@@ -275,6 +275,17 @@ namespace VMods.Shared
 			return null;
 		}
 
+		public static AdminLevel GetAdminLevel(Entity userEntity, EntityManager? entityManager = null)
+		{
+			entityManager ??= CurrentWorld.EntityManager;
+			if(entityManager.Value.HasComponent<AdminUser>(userEntity))
+			{
+				var adminUser = entityManager.Value.GetComponentData<AdminUser>(userEntity);
+				return adminUser.Level;
+			}
+			return AdminLevel.None;
+		}
+
 		public static void LogAllComponentTypes(Entity entity, EntityManager? entityManager = null)
 		{
 			if(entity == Entity.Null)

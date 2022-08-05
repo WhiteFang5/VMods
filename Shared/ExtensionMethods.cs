@@ -24,5 +24,15 @@ namespace VMods.Shared
 			}
 			return $"{timeSpan.Milliseconds}ms";
 		}
+
+		public static bool HasReqLevel(this ProjectM.AdminLevel adminLevel, ProjectM.AdminLevel reqAdminLevel) => (int)adminLevel >= (int)reqAdminLevel;
+
+		public static bool HasReqLevel(this ProjectM.AdminLevel adminLevel, CommandAttribute.AdminLevel reqAdminLevel) => (int)adminLevel >= (int)reqAdminLevel;
+
+		public static bool HasReqLevel(this CommandAttribute.AdminLevel adminLevel, ProjectM.AdminLevel reqAdminLevel) => (int)adminLevel >= (int)reqAdminLevel;
+
+		public static ProjectM.AdminLevel ToAdminLevel(this CommandAttribute.AdminLevel adminLevel) => (ProjectM.AdminLevel)(int)adminLevel;
+
+		public static CommandAttribute.AdminLevel ToAdminLevel(this ProjectM.AdminLevel adminLevel) => (CommandAttribute.AdminLevel)(int)adminLevel;
 	}
 }
