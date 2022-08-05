@@ -38,6 +38,10 @@ namespace VMods.RecoverEmptyContainers
 
 		public void OnGameInitialized()
 		{
+			if(VWorld.IsClient)
+			{
+				return;
+			}
 			RecoverEmptyContainersSystem.Initialize();
 		}
 

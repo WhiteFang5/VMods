@@ -9,6 +9,9 @@
 * Initial release
 
 ## Recover Empty Containers
+### Next Release
+* Fixed an exception log that was caused when running the plugin client-side
+
 ### v1.0.1
 * Fixed an exploit where you could get infinite empty containers when cancelling the ability usage of the Potion/Brew
 
