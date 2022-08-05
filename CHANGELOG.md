@@ -33,6 +33,9 @@
 * Initial release
 
 ## Chest PvP Protection
+### Next Release
+* Fixed the config group to be more in line with how config groups are named in other VMods
+
 ### v1.0.1
 * Fixed an issue related to retrieving Inventories from the NetworkIdMapping causing the mod to crash/not work correctly
 

@@ -16,8 +16,8 @@ namespace VMods.ChestPvPProtection
 
 		public static void Initialize(ConfigFile config)
 		{
-			ChestPvPProtectionEnabled = config.Bind(nameof(ChestPvPProtection), nameof(ChestPvPProtectionEnabled), false, "Enabled/disable the Chest PvP Protection system.");
-			ChestPvPProtectionSendMessage = config.Bind(nameof(ChestPvPProtection), nameof(ChestPvPProtectionSendMessage), true, "Enabled/disable the sending of a system message to the player with the PvP Protection buff that's attempting to interact with an enemy player's chest.");
+			ChestPvPProtectionEnabled = config.Bind(nameof(ChestPvPProtectionSystemConfig), nameof(ChestPvPProtectionEnabled), false, "Enabled/disable the Chest PvP Protection system.");
+			ChestPvPProtectionSendMessage = config.Bind(nameof(ChestPvPProtectionSystemConfig), nameof(ChestPvPProtectionSendMessage), true, "Enabled/disable the sending of a system message to the player with the PvP Protection buff that's attempting to interact with an enemy player's chest.");
 		}
 
 		#endregion
