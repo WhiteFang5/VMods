@@ -17,13 +17,8 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <Compile Include="..\Shared\CommandSystem\Command.cs" Link="Shared\Command.cs" />
-    <Compile Include="..\Shared\CommandSystem\CommandAttribute.cs" Link="Shared\CommandAttribute.cs" />
-    <Compile Include="..\Shared\CommandSystem\CommandExtensions.cs" Link="Shared\CommandExtensions.cs" />
-    <Compile Include="..\Shared\CommandSystem\CommandSystem.cs" Link="Shared\CommandSystem.cs" />
-    <Compile Include="..\Shared\CommandSystem\CommandSystemConfig.cs" Link="Shared\CommandSystemConfig.cs" />
+    <Compile Include="..\Shared\BloodType.cs" Link="Shared\BloodType.cs" />
     <Compile Include="..\Shared\Utils.cs" Link="Shared\Utils.cs" />
-    <Compile Include="..\Shared\VModCharacter.cs" Link="Shared\VModCharacter.cs" />
   </ItemGroup>
   
   <ItemGroup>

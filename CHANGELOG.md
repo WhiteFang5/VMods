@@ -1,6 +1,10 @@
 # VMods Change Log
 
 ## Blood Refill
+### Next Release
+* Moved the `!setblood` command to the Generic Chat Commands VMod
+* Made the `BloodType` enum generic and usable across multiple VMods
+
 ### v1.0.0
 * Initial release
 

@@ -29,10 +29,8 @@ namespace VMods.BloodRefill
 			}
 			Utils.Initialize(Log, PluginInfo.PLUGIN_NAME);
 
-			CommandSystemConfig.Initialize(Config);
 			BloodRefillConfig.Initialize(Config);
 
-			CommandSystem.Initialize();
 			BloodRefillSystem.Initialize();
 
 			_hooks = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
@@ -48,7 +46,6 @@ namespace VMods.BloodRefill
 			}
 			_hooks?.UnpatchSelf();
 			BloodRefillSystem.Deinitialize();
-			CommandSystem.Deinitialize();
 			Config.Clear();
 			Utils.Deinitialize();
 			return true;

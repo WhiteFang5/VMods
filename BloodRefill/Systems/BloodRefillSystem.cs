@@ -1,7 +1,6 @@
 ﻿using ProjectM;
 using ProjectM.Network;
 using System;
-using System.Linq;
 using Unity.Entities;
 using VMods.Shared;
 using Wetstone.API;
@@ -163,78 +162,12 @@ namespace VMods.BloodRefill
 					float newTotalBloodInLitres = (int)Math.Round(newTotalBlood) / 10f;
 					Utils.SendMessage(userEntity, $"+{refillAmountInLitres}L Blood ({newTotalBloodInLitres}L)", ServerChatMessageType.Lore);
 
-					ChangeBloodType(user, playerBloodType, playerBlood.Quality, roundedRefillAmount);
+					playerBloodType.ApplyToPlayer(user, playerBlood.Quality, roundedRefillAmount);
 					return;
 				}
 			}
 
 			Utils.SendMessage(userEntity, $"No blood gained from the enemy.", ServerChatMessageType.Lore);
-		}
-
-		private static void ChangeBloodType(User user, BloodType bloodType, float quality, int addAmount)
-		{
-			ChangeBloodDebugEvent bloodChangeEvent = new()
-			{
-				Source = bloodType.ToPrefabGUID(),
-				Quality = quality,
-				Amount = addAmount,
-			};
-			VWorld.Server.GetExistingSystem<DebugEventsSystem>().ChangeBloodEvent(user.Index, ref bloodChangeEvent);
-		}
-
-		[Command("setblood", "setblood <blood-type> <blood-quality> [<gain-amount>]", "Sets your blood type to the specified blood-type and blood-quality, and optionally adds a given amount of blood (in Litres).", true)]
-		private static void OnSetBloodCommand(Command command)
-		{
-			var vmodCharacter = command.VModCharacter;
-			var argCount = command.Args.Length;
-			if(argCount >= 2)
-			{
-				var searchBloodType = command.Args[0];
-				var validBloodTypes = BloodTypeExtensions.BloodTypeToPrefabGUIDMapping.Keys.ToList();
-				if(Enum.TryParse(searchBloodType.ToLowerInvariant(), true, out BloodType bloodType) && validBloodTypes.Contains(bloodType))
-				{
-					var searchBloodQuality = command.Args[1];
-					if(int.TryParse(searchBloodQuality.Replace("%", string.Empty), out var bloodQuality) && bloodQuality >= 1 && bloodQuality <= 100)
-					{
-						float? addBloodAmount = null;
-						if(argCount >= 3)
-						{
-							var searchLitres = command.Args[2];
-							if(float.TryParse(searchLitres.Replace("L", string.Empty), out float parsedAddBloodAmount) && parsedAddBloodAmount >= -10f && parsedAddBloodAmount <= 10f)
-							{
-								addBloodAmount = parsedAddBloodAmount;
-							}
-							else
-							{
-								vmodCharacter.SendSystemMessage($"<color=#ff0000>Invalid gain-amount '{searchBloodQuality}'. Should be between -10 and 10</color>");
-							}
-						}
-						else
-						{
-							addBloodAmount = 10f;
-						}
-
-						if(addBloodAmount.HasValue)
-						{
-							ChangeBloodType(vmodCharacter.User, bloodType, bloodQuality, (int)(addBloodAmount.Value * 10f));
-							vmodCharacter.SendSystemMessage($"Changed blood type to <color=#ff0000>{bloodQuality}%</color> <color=#ffffff>{searchBloodType}</color> and added <color=#ff0000>{addBloodAmount.Value}L</color>");
-						}
-					}
-					else
-					{
-						vmodCharacter.SendSystemMessage($"<color=#ff0000>Invalid blood-quality '{searchBloodQuality}'. Should be between 1 and 100</color>");
-					}
-				}
-				else
-				{
-					vmodCharacter.SendSystemMessage($"<color=#ff0000>Invalid blood-type '{searchBloodType}'. Options are: {string.Join(", ", validBloodTypes.Select(x => x.ToString()))}</color>");
-				}
-			}
-			else
-			{
-				CommandSystem.SendInvalidCommandMessage(command);
-			}
-			command.Use();
 		}
 
 		#endregion
