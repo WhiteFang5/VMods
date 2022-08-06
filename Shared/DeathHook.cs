@@ -3,7 +3,7 @@ using ProjectM;
 using Unity.Collections;
 using Wetstone.API;
 
-namespace VMods.BloodRefill
+namespace VMods.Shared
 {
 	[HarmonyPatch]
 	public static class DeathHook
