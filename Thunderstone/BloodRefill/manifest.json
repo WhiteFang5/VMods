@@ -1,7 +1,7 @@
 {
   "name": "VMods_Blood_Refill",
   "description": "A mod that allows players to refill their blood pool.",
-  "version_number": "1.0.0",
+  "version_number": "1.0.1",
   "dependencies": [
     "BepInEx-BepInExPack_V_Rising-1.0.0",
     "molenzwiebel-Wetstone-1.1.0"

@@ -18,6 +18,8 @@ namespace VMods.Shared
 
 		#region Properties
 
+		public ulong PlatformId => User.PlatformId;
+
 		public bool IsAdmin => User.IsAdmin;
 
 		public AdminLevel AdminLevel { get; }

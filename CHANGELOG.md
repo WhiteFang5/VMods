@@ -1,7 +1,9 @@
 # VMods Change Log
 
 ## Blood Refill
-### Next Release
+### v1.0.1
+* Added a config option to globally enable/disable the sending of blood refill messages
+* Added a new '!toggle-blood-refill-messages [on/off]' command for players to turn on/off the blood refill messages for themselves
 * Moved the `!setblood` command to the Generic Chat Commands VMod
 * Made the `BloodType` enum generic and usable across multiple VMods
 

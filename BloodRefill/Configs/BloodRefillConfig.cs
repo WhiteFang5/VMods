@@ -26,6 +26,8 @@ namespace VMods.BloodRefill
 
 		public static ConfigEntry<float> BloodRefillMultiplier { get; private set; }
 
+		public static ConfigEntry<bool> BloodRefillSendRefillMessage { get; private set; }
+
 		#endregion
 
 		#region Public Methods
@@ -42,6 +44,7 @@ namespace VMods.BloodRefill
 			BloodRefillAmount = config.Bind(nameof(BloodRefillConfig), nameof(BloodRefillAmount), 2.0f, "The maximum amount of blood to refill with no level difference, a matching blood type and quality (Expressed in Litres of blood).");
 			BloodRefillMultiplier = config.Bind(nameof(BloodRefillConfig), nameof(BloodRefillMultiplier), 1.0f, $"The multiplier used in the blood refill calculation. [Formula: (('Enemy Level' / 'Player Level') * ((100 - ('Player Blood Quality %' - 'Enemy Blood Quality %')) / 100)) * '{nameof(BloodRefillAmount)}' * '(If applicable) {nameof(BloodRefillDifferentBloodTypeMultiplier)}' * '{nameof(BloodRefillMultiplier)}']");
 			BloodRefillDifferentBloodTypeMultiplier = config.Bind(nameof(BloodRefillConfig), nameof(BloodRefillDifferentBloodTypeMultiplier), 0.1f, $"The multiplier used in the blood refill calculation as a penalty for feeding on a different blood type (only works when {nameof(BloodRefillRequiresSameBloodType)} is disabled).");
+			BloodRefillSendRefillMessage = config.Bind(nameof(BloodRefillConfig), nameof(BloodRefillSendRefillMessage), true, $"When enabled, a refill chat message is sent to the player.");
 		}
 
 		#endregion

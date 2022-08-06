@@ -1,6 +1,7 @@
 ﻿using ProjectM;
 using ProjectM.Network;
 using System;
+using System.Collections.Generic;
 using Unity.Entities;
 using VMods.Shared;
 using Wetstone.API;
@@ -10,16 +11,37 @@ namespace VMods.BloodRefill
 {
 	public static class BloodRefillSystem
 	{
+		#region Consts
+
+		private const string BloodRefillFileName = "BloodRefill.json";
+
+		#endregion
+
+		#region Variables
+
+		private static Dictionary<ulong, BloodRefillData> _bloodRefills;
+
+		#endregion
+
 		#region Public Methods
 
 		public static void Initialize()
 		{
+			_bloodRefills = VModStorage.Load(BloodRefillFileName, () => new Dictionary<ulong, BloodRefillData>());
+
+			VModStorage.SaveEvent += Save;
 			DeathHook.DeathEvent += OnDeath;
 		}
 
 		public static void Deinitialize()
 		{
 			DeathHook.DeathEvent -= OnDeath;
+			VModStorage.SaveEvent -= Save;
+		}
+
+		public static void Save()
+		{
+			VModStorage.Save(BloodRefillFileName, _bloodRefills);
 		}
 
 		#endregion
@@ -146,6 +168,8 @@ namespace VMods.BloodRefill
 
 			refillAmount *= BloodRefillConfig.BloodRefillMultiplier.Value;
 
+			bool sendMessage = BloodRefillConfig.BloodRefillSendRefillMessage.Value && (!_bloodRefills.TryGetValue(user.PlatformId, out var bloodRefillData) || bloodRefillData.ShowRefillMessages);
+
 			if(refillAmount > 0f)
 			{
 				int roundedRefillAmount = (int)Math.Ceiling(refillAmount);
@@ -156,18 +180,87 @@ namespace VMods.BloodRefill
 					Utils.Logger.LogMessage($"New Blood Amount: {playerBlood.Value + roundedRefillAmount}");
 #endif
 
-					float newTotalBlood = Math.Min(playerBlood.MaxBlood, playerBlood.Value + roundedRefillAmount);
-					float actualBloodGained = newTotalBlood - playerBlood.Value;
-					float refillAmountInLitres = (int)(actualBloodGained * 10f) / 100f;
-					float newTotalBloodInLitres = (int)Math.Round(newTotalBlood) / 10f;
-					Utils.SendMessage(userEntity, $"+{refillAmountInLitres}L Blood ({newTotalBloodInLitres}L)", ServerChatMessageType.Lore);
+					if(sendMessage)
+					{
+						float newTotalBlood = Math.Min(playerBlood.MaxBlood, playerBlood.Value + roundedRefillAmount);
+						float actualBloodGained = newTotalBlood - playerBlood.Value;
+						float refillAmountInLitres = (int)(actualBloodGained * 10f) / 100f;
+						float newTotalBloodInLitres = (int)Math.Round(newTotalBlood) / 10f;
+						Utils.SendMessage(userEntity, $"+{refillAmountInLitres}L Blood ({newTotalBloodInLitres}L)", ServerChatMessageType.Lore);
+					}
 
 					playerBloodType.ApplyToPlayer(user, playerBlood.Quality, roundedRefillAmount);
 					return;
 				}
 			}
 
-			Utils.SendMessage(userEntity, $"No blood gained from the enemy.", ServerChatMessageType.Lore);
+			if(sendMessage)
+			{
+				Utils.SendMessage(userEntity, $"No blood gained from the enemy.", ServerChatMessageType.Lore);
+			}
+		}
+
+		[Command("toggle-blood-refill-messages,toggle-blood-messages,toggle-blood-refill-msgs,togglebloodrefillmessages,togglebloodrefillmsgs", "toggle-blood-refill-messages [on/off]", "Toggles the Blood Refill chat messages (on/off)")]
+		private static void OnToggleBloodRefillMessages(Command command)
+		{
+			var platformId = command.VModCharacter.PlatformId;
+			BloodRefillData bloodRefillData = null;
+
+			bool? showRefillMessages = null;
+			if(command.Args.Length >= 1)
+			{
+				switch(command.Args[0])
+				{
+					case "on":
+					case "true":
+					case "1":
+						showRefillMessages = true;
+						break;
+
+					case "off":
+					case "false":
+					case "0":
+						showRefillMessages = false;
+						break;
+
+					default:
+						command.VModCharacter.SendSystemMessage($"<color=#ff0000>Invalid toggle options. Options are: on, off</color>");
+						break;
+				}
+			}
+			else
+			{
+				if(_bloodRefills.TryGetValue(platformId, out bloodRefillData))
+				{
+					showRefillMessages = !bloodRefillData.ShowRefillMessages;
+				}
+				else
+				{
+					showRefillMessages = false;
+				}
+			}
+
+			if(showRefillMessages.HasValue)
+			{
+				if(bloodRefillData == null && !_bloodRefills.TryGetValue(platformId, out bloodRefillData))
+				{
+					bloodRefillData = new BloodRefillData();
+					_bloodRefills[platformId] = bloodRefillData;
+				}
+
+				bloodRefillData.ShowRefillMessages = showRefillMessages.Value;
+
+				command.VModCharacter.SendSystemMessage($"Blood Refill messages have now been turned <color=#{(showRefillMessages.Value ? "00ff00" : "ff0000")}>{(showRefillMessages.Value ? "on" : "off")}</color>");
+			}
+		}
+
+		#endregion
+
+		#region Nested
+
+		public class BloodRefillData
+		{
+			public bool ShowRefillMessages { get; set; }
 		}
 
 		#endregion

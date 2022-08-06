@@ -14,6 +14,7 @@ The amount of blood regained is based on the level difference, blood type and bl
 * Switch between having V-Blood act as diluted or pure blood, or have V-Blood completely refill your blood pool
 * The options to make refilling random between 0.1L and the calculated amount (which then acts as a max refill amount)
 * A global refill multiplier (applied after picking a random refill value)
+* Enable/disable blood refill chat messages for everyone
 
 </details>
 
