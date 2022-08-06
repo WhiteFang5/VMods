@@ -14,7 +14,7 @@ namespace VMods.PvPLeaderboard
 	{
 		#region Consts
 
-		private const string PvPPunishmentFileName = "PvPLeaderboard.json";
+		private const string PvPLeaderboardFileName = "PvPLeaderboard.json";
 
 		#endregion
 
@@ -34,7 +34,7 @@ namespace VMods.PvPLeaderboard
 
 		public static void Initialize()
 		{
-			_pvpStats = VModStorage.Load(PvPPunishmentFileName, () => new Dictionary<ulong, PvPStats>());
+			_pvpStats = VModStorage.Load(PvPLeaderboardFileName, () => new Dictionary<ulong, PvPStats>());
 
 			VModStorage.SaveEvent += Save;
 			VampireDownedHook.VampireDownedEvent += OnVampireDowned;
@@ -48,7 +48,7 @@ namespace VMods.PvPLeaderboard
 
 		public static void Save()
 		{
-			VModStorage.Save(PvPPunishmentFileName, _pvpStats);
+			VModStorage.Save(PvPLeaderboardFileName, _pvpStats);
 		}
 
 		#endregion
