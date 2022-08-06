@@ -120,7 +120,7 @@ namespace VMods.PvPLeaderboard
 			}
 		}
 
-		[Command("pvpstats,pvp", "pvpstats", "Shows your current pvp stats (kills, deaths & K/D ratio).")]
+		[Command("pvpstats,pvp", "pvpstats [<player-name>]", "Shows your current pvp stats (kills, deaths & K/D ratio).")]
 		private static void OnPvPStatsCommand(Command command)
 		{
 			var entityManager = VWorld.Server.EntityManager;
