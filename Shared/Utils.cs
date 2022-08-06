@@ -22,6 +22,8 @@ namespace VMods.Shared
 
 		public static readonly PrefabGUID PvPProtectionBuff = new(1111481396);
 
+		public static readonly PrefabGUID BloodPotion = new(828432508);
+
 		#endregion
 
 		#region Variables

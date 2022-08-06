@@ -48,3 +48,7 @@
 
 ### v1.0.0
 * Initial release
+
+## Generic Chat Commands
+### v1.0.0
+* Initial release
