@@ -4,7 +4,7 @@
     <AssemblyName>VMods.PvPPunishment</AssemblyName>
     <RootNamespace>VMods.PvPPunishment</RootNamespace>
     <Description>A mod that punishes high-level players that kill low-level players</Description>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>

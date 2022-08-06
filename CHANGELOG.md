@@ -25,6 +25,9 @@
 * Initial release
 
 ## PvP Leaderboard
+### v1.0.2
+* Fixed an issue with commands that lookup players by name
+
 ### v1.0.1
 * Fixed the logging of the incorrect current level in the grief-kill log (it logged the killer's lvl instead of the victim's)
 
@@ -32,6 +35,9 @@
 * Initial release
 
 ## PvP Punishment
+### v1.0.4
+* Fixed an issue with commands that lookup players by name
+
 ### v1.0.3
 * Added a new config option to announce a grief-kill (exactly the same as the PvP Leaderboard mod v1.0.1)
 
@@ -52,5 +58,8 @@
 * Initial release
 
 ## Generic Chat Commands
+### v1.0.1
+* Fixed an issue with commands that lookup players by name
+
 ### v1.0.0
 * Initial release

@@ -1,7 +1,7 @@
 {
   "name": "VMods_PvP_Leaderboard",
   "description": "A mod that keeps track of Kills, Death and the K/D ratio of players and ranks them in a leaderboard.",
-  "version_number": "1.0.1",
+  "version_number": "1.0.2",
   "dependencies": [
     "BepInEx-BepInExPack_V_Rising-1.0.0",
     "molenzwiebel-Wetstone-1.1.0"

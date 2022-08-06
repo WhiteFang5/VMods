@@ -1,7 +1,7 @@
 {
   "name": "VMods_Generic_Chat_Commands",
   "description": "A mod that adds a fair amount of generic chat commands (mostly for Mods & Admins only though) and a player chat muting system.",
-  "version_number": "1.0.0",
+  "version_number": "1.0.1",
   "dependencies": [
     "BepInEx-BepInExPack_V_Rising-1.0.0",
     "molenzwiebel-Wetstone-1.1.0"

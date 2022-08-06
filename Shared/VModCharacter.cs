@@ -87,11 +87,19 @@ namespace VMods.Shared
 			foreach(var userEntity in users)
 			{
 				var userData = entityManager.Value.GetComponentData<User>(userEntity);
-				var playerCharacter = entityManager.Value.GetComponentData<PlayerCharacter>(userData.LocalCharacter._Entity);
-				if(userData.CharacterName.ToString() == charactername)
+				if(userData.CharacterName.ToString() != charactername)
 				{
-					return new VModCharacter(userData, playerCharacter);
+					continue;
 				}
+
+				var characterEntity = userData.LocalCharacter._Entity;
+				if(!entityManager.Value.HasComponent<PlayerCharacter>(characterEntity))
+				{
+					continue;
+				}
+
+				var playerCharacter = entityManager.Value.GetComponentData<PlayerCharacter>(characterEntity);
+				return new VModCharacter(userData, playerCharacter);
 			}
 			return null;
 		}
