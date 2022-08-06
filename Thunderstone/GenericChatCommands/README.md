@@ -2,7 +2,7 @@
 A server-side only mod that adds a fair amount of generic chat commands (mostly for Mods & Admins only though) and a player chat muting system.
 
 The player chat mute system can be used by Moderators & Admins to mute players (Admins, Super Admins and Moderators cannot be muted).
-A Super Admin can grant Moderator or Admin provileges to other players (using one of the commands).
+A Super Admin can grant Moderator or Admin privileges to other players (using one of the commands).
 
 <details>
 <summary>List of available player commands</summary>
