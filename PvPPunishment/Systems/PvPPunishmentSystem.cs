@@ -33,14 +33,14 @@ namespace VMods.PvPPunishment
 			PruneOffenses();
 
 			VModStorage.SaveEvent += Save;
-			VampireDownedHook.VampireDownedEvent += OnVampireDowned;
+			VampireDownedHook.VampireDownedByVampireEvent += OnVampireDowned;
 			BuffSystemHook.ProcessBuffEvent += OnProcessBuff;
 		}
 
 		public static void Deinitialize()
 		{
 			BuffSystemHook.ProcessBuffEvent -= OnProcessBuff;
-			VampireDownedHook.VampireDownedEvent -= OnVampireDowned;
+			VampireDownedHook.VampireDownedByVampireEvent -= OnVampireDowned;
 			VModStorage.SaveEvent -= Save;
 		}
 

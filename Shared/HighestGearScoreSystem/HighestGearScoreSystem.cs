@@ -31,12 +31,12 @@ namespace VMods.Shared
 
 			VModStorage.SaveEvent += Save;
 			EquipmentHooks.EquipmentChangedEvent += OnEquipmentChanged;
-			VampireDownedHook.VampireDownedEvent += OnVampireDowned;
+			VampireDownedHook.VampireDownedByVampireEvent += OnVampireDowned;
 		}
 
 		public static void Deinitialize()
 		{
-			VampireDownedHook.VampireDownedEvent -= OnVampireDowned;
+			VampireDownedHook.VampireDownedByVampireEvent -= OnVampireDowned;
 			EquipmentHooks.EquipmentChangedEvent -= OnEquipmentChanged;
 			VModStorage.SaveEvent -= Save;
 		}
@@ -46,6 +46,11 @@ namespace VMods.Shared
 			PruneHighestGearScores();
 
 			VModStorage.Save(HighestGearScoreFileName, _gearScoreData);
+		}
+
+		public static float GetCurrentOrHighestGearScore(VModCharacter vmodCharacter)
+		{
+			return GetCurrentOrHighestGearScore(vmodCharacter.FromCharacter);
 		}
 
 		public static float GetCurrentOrHighestGearScore(FromCharacter fromCharacter)

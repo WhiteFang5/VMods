@@ -11,9 +11,13 @@ namespace VMods.Shared
 	{
 		#region Events
 
-		public delegate void VampireDownedEventHandler(Entity killer, Entity victim);
-		public static event VampireDownedEventHandler VampireDownedEvent;
-		private static void FireVampireDownedEvent(Entity killer, Entity victim) => VampireDownedEvent?.Invoke(killer, victim);
+		public delegate void VampireDownedByVampireEventHandler(Entity killer, Entity victim);
+		public static event VampireDownedByVampireEventHandler VampireDownedByVampireEvent;
+		private static void FireVampireDownedByVampireEvent(Entity killer, Entity victim) => VampireDownedByVampireEvent?.Invoke(killer, victim);
+
+		public delegate void VampireDownedByMonsterEventHandler(Entity killer, Entity victim);
+		public static event VampireDownedByMonsterEventHandler VampireDownedByMonsterEvent;
+		private static void FireVampireDownedByMonsterEvent(Entity killer, Entity victim) => VampireDownedByMonsterEvent?.Invoke(killer, victim);
 
 		#endregion
 
@@ -37,9 +41,21 @@ namespace VMods.Shared
 				Entity source = entityManager.GetComponentData<VampireDownedBuff>(entity).Source;
 				VampireDownedServerEventSystem.TryFindRootOwner(source, 1, entityManager, out var killer);
 
-				if(entityManager.HasComponent<PlayerCharacter>(killer) && entityManager.HasComponent<PlayerCharacter>(victim) && !killer.Equals(victim))
+				if(killer.Equals(victim))
 				{
-					FireVampireDownedEvent(killer, victim);
+					continue;
+				}
+
+				if(entityManager.HasComponent<PlayerCharacter>(victim))
+				{
+					if(entityManager.HasComponent<PlayerCharacter>(killer))
+					{
+						FireVampireDownedByVampireEvent(killer, victim);
+					}
+					else if(entityManager.HasComponent<UnitLevel>(killer))
+					{
+						FireVampireDownedByMonsterEvent(killer, victim);
+					}
 				}
 			}
 		}

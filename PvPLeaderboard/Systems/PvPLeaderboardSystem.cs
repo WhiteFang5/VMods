@@ -37,12 +37,12 @@ namespace VMods.PvPLeaderboard
 			_pvpStats = VModStorage.Load(PvPLeaderboardFileName, () => new Dictionary<ulong, PvPStats>());
 
 			VModStorage.SaveEvent += Save;
-			VampireDownedHook.VampireDownedEvent += OnVampireDowned;
+			VampireDownedHook.VampireDownedByVampireEvent += OnVampireDowned;
 		}
 
 		public static void Deinitialize()
 		{
-			VampireDownedHook.VampireDownedEvent -= OnVampireDowned;
+			VampireDownedHook.VampireDownedByVampireEvent -= OnVampireDowned;
 			VModStorage.SaveEvent -= Save;
 		}
 

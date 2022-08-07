@@ -65,6 +65,19 @@ namespace VMods.Shared
 			AdminLevel = Utils.GetAdminLevel(FromCharacter.User, entityManager);
 		}
 
+		public VModCharacter(Entity charEntity, EntityManager? entityManager = null)
+		{
+			entityManager ??= Utils.CurrentWorld.EntityManager;
+			Character = entityManager.Value.GetComponentData<PlayerCharacter>(charEntity);
+			FromCharacter = new FromCharacter()
+			{
+				User = Character.UserEntity._Entity,
+				Character = charEntity,
+			};
+			User = entityManager.Value.GetComponentData<User>(FromCharacter.User);
+			AdminLevel = Utils.GetAdminLevel(FromCharacter.User, entityManager);
+		}
+
 		#endregion
 
 		#region Public Methods

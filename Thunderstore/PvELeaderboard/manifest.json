@@ -1,0 +1,10 @@
+{
+  "name": "VMods_PvE_Leaderboard",
+  "description": "A server-side only mod that keeps track of PvE Kills, Death, K/D ratio and Lvl Kills of players and ranks them in multiple leaderboards.",
+  "version_number": "1.0.0",
+  "dependencies": [
+    "BepInEx-BepInExPack_V_Rising-1.0.0",
+    "molenzwiebel-Wetstone-1.1.0"
+  ],
+  "website_url": "https://github.com/WhiteFang5/VMods#pve-leaderboard"
+}

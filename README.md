@@ -9,6 +9,7 @@ VMods is a selection of Mods for V-Rising made using a common/shared codebase th
 * [PvP Punishment](#pvp-punishment)
 * [Chest PvP Protection](#chest-pvp-protection)
 * [Generic Chat Commands](#generic-chat-commands)
+* [PvE Leaderboard](#pve-leaderboard)
 
 ## General Mod info (Applies to most mods)
 ### How to manually install
@@ -205,5 +206,27 @@ _Note: These commands can be made Admin-only through a config setting_
 * Enable/disable the ability for players with the Moderator privilege to mute/unmute other players
 * Enable/disable server-wide announcing when a player gets muted
 * Enable/disable server-wide announcing when a player gets unmuted
+
+</details>
+
+## PvE Leaderboard
+A server-side only mod that keeps track of PvE Kills, Death, K/D ratio and Lvl Kills of players and ranks them in multiple leaderboards.  
+  
+There are leaderboards for each enemy faction, blood type and an overall leaderboard.  
+Additionally when killing an enemy, the level of that enemy is added to your "Lvl Kills" score.  
+  
+This mod also has the option to exclude low-level kills from counting towards the K/D of the leaderboard(s).  
+There's also an option to prevent cheesing this restriction where the highest gear score (in the past X minutes) is used instead of the current gear score.  
+  
+Players can see their own stats and the leaderboard itself using a command (By default: `!pvestats [<faction>/<blood-type>/all/overall]`).  
+The leaderboard shows up to 5 ranks at a time and allows players to input a page number so they can "browse" the leaderboard (By default: `!pvelb [<faction/blood-type>] [<pagenum>]`).
+The Lvl Kills leaderboards can also be browsed using a command (By default: `!pvelklb [<faction/blood-type>] [<pagenum>]`).
+  
+<details>
+<summary>Configuration Options</summary>
+
+* Set a Level Difference at which the K/D isn't counting anymore of the leaderboard.
+* Enable/disable usage of the anti-cheesing system (highest gear score tracking)
+* Change the amount of time the highest gear score is remembered/tracked
 
 </details>

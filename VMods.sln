@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChestPvPProtection", "Chest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericChatCommands", "GenericChatCommands\GenericChatCommands.csproj", "{D3A41E94-FC9F-4678-B680-41BA151B9E4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PvELeaderboard", "PvELeaderboard\PvELeaderboard.csproj", "{5ABC09AF-92EA-4EBA-88F9-29FD8730472C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{D3A41E94-FC9F-4678-B680-41BA151B9E4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3A41E94-FC9F-4678-B680-41BA151B9E4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3A41E94-FC9F-4678-B680-41BA151B9E4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ABC09AF-92EA-4EBA-88F9-29FD8730472C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ABC09AF-92EA-4EBA-88F9-29FD8730472C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ABC09AF-92EA-4EBA-88F9-29FD8730472C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ABC09AF-92EA-4EBA-88F9-29FD8730472C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
