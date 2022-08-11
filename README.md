@@ -230,3 +230,26 @@ The Lvl Kills leaderboards can also be browsed using a command (By default: `!pv
 * Change the amount of time the highest gear score is remembered/tracked
 
 </details>
+
+## Siege Golem Tweaker
+A server-side only mod that allows you to tweak the stats (Power, Resists, (Move)Speed, Max HP) of Siege Golems.
+
+<details>
+<summary>Configuration Options</summary>
+
+* Siege Power Multiplier
+* Physical Power Multiplier
+* Spell Power Multiplier
+* Movement Speed Multiplier
+* Attack Speed Multiplier
+* Max Health Multiplier
+* Passive Health Regen
+* Physical Resistance
+* Spell Resistance
+* Fire Resistance
+* Holy Resistance
+* Sun Resistance
+* Silver Resistance
+* Garlic Resistance
+
+</details>
